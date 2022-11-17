@@ -1,10 +1,13 @@
 <head>
-    <title>Bereitschaftsplan Schulsanitätsdienst</title>
+    <meta charset="UTF-8" />
+    <title>Bereitschaftsplan Schulsanis</title>
+    <meta http-equiv="refresh" content="15" >
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
 <?php
     include("person.php");
-    include("schicht.php");
 
     $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
     $filesize = count(file("data/personalData.csv"));
@@ -21,6 +24,8 @@
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
+
+    //$time = "10:34:45";
 
     if(strtotime($time) < strtotime("07:45:00")){
         $shiftnr = 0;
@@ -51,6 +56,7 @@
     } else {
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
     }
+    echo "<div class='clock'>".$time."</div>";
     
     switch($shiftnr){
         case 0:
@@ -60,7 +66,7 @@
             echo "Die letzte Schicht ist bereits vorbei.<br>";
             break;
         default:
-            echo "<table border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
+            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
 
             for($i = 0; $i<$shiftnr+1; $i++){
                 $shift = fgets($bereitschaftsplan);
@@ -72,11 +78,29 @@
                 echo "<td>".$personalAll[$shift[$i]]->vorname." ".$personalAll[$shift[$i]]->name."</td><td>".$personalAll[$shift[$i]]->klasse."</td><td>".$personalAll[$shift[$i]]->handynummer."</td>";
                 echo "</tr>";
             }
-
-            echo "</table>";
+            echo "
+            <tr>
+            <tr id='placeholder'><td colspan='3'><hr></td></tr>
+            <td colspan='3'>
+                <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen, Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
+            </td>
+            </tr>
+                <tr>
+                    <td>".$personalAll[1]->vorname." ".$personalAll[1]->name."</td><td>".$personalAll[1]->klasse."</td><td>".$personalAll[1]->handynummer."</td>
+                </tr>
+                <tr>
+                    <td>".$personalAll[2]->vorname." ".$personalAll[2]->name."</td><td>".$personalAll[2]->klasse."</td><td>".$personalAll[2]->handynummer."</td>
+                </tr>
+                <tr>
+                    <td>".$personalAll[3]->vorname." ".$personalAll[3]->name."</td><td>".$personalAll[3]->klasse."</td><td>".$personalAll[3]->handynummer."</td>
+                </tr>
+            </table>";
             break;
     }
-    echo $time;
-    //sleep(10);
-    //header("Refresh:0");
 ?>
+    <div class='footer'>
+        <div id='left'>Stand des Bereitschaftsplans: 17.11.2022</div>
+        <div id='middle'>Version 1.0</div>
+        <div id='right'>©Jonathan Hostadt 2022</div>
+    </div>
+</body>
