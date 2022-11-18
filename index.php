@@ -9,8 +9,8 @@
 <?php
     include("person.php");
 
-    $personalData = fopen('data/personalData1.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!"); //denk dran die Datei wieder zu ändern
-    $filesize = count(file("data/personalData1.csv"));
+    $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
+    $filesize = count(file("data/personalData.csv"));
     $personalAll = [];
     
     error_reporting(0);
