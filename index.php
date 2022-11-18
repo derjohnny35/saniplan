@@ -79,12 +79,12 @@
                 echo "</tr>";
             }
             echo "
-            <tr>
-            <tr id='placeholder'><td colspan='3'><hr></td></tr>
-            <td colspan='3'>
-                <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen, Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
-            </td>
-            </tr>
+                <tr id='placeholder'><td colspan='3'><hr></td></tr>
+                <tr>            
+                    <td colspan='3'>
+                        <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen, Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
+                    </td>
+                </tr>
                 <tr>
                     <td>".$personalAll[1]->vorname." ".$personalAll[1]->name."</td><td>".$personalAll[1]->klasse."</td><td>".$personalAll[1]->handynummer."</td>
                 </tr>
