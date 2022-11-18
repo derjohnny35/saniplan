@@ -25,7 +25,7 @@
     $week = date("W");
     $shiftnr = null;
     
-    //$time = "10:34:45";
+    $time = "10:34:45";
 
     if(strtotime($time) < strtotime("07:45:00")){
         $shiftnr = 0;
