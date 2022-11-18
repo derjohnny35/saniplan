@@ -27,7 +27,6 @@ tr:nth-child(odd) {
 .clock {
     padding-left: 1%;
     padding-right: 1%;
-    margin: auto;
     background-color: gainsboro;
     width: fit-content;
     border-radius: 25px;
@@ -40,7 +39,7 @@ tr:nth-child(odd) {
     bottom: 0;
     width: 100%;
     background-color: #f2f2f2;
-    font-size: 50%;
+    font-size: 40%;
     display: flex;
 }
 #left  {
@@ -57,11 +56,14 @@ tr:nth-child(odd) {
 hr {
    border: .5px dashed;
 }
+#hr {
+    background-color: white;
+}
 .unterueberschrift {
     font-weight: bold;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 100%;
     font-size: 100%;
     margin-bottom: 10px;
 }

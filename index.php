@@ -24,7 +24,7 @@
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-
+    
     //$time = "10:34:45";
 
     if(strtotime($time) < strtotime("07:45:00")){
@@ -56,7 +56,7 @@
     } else {
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
     }
-    echo "<div class='clock'>".$time."</div>";
+    echo "<div class='clock'>".date("G:i")." Uhr</div>";
     
     switch($shiftnr){
         case 0:
@@ -75,16 +75,16 @@
 
             for($i = 0; $i<count($shift); $i++){
                 echo "<tr>";
-                echo "<td>".$personalAll[$shift[$i]]->vorname." ".$personalAll[$shift[$i]]->name."</td><td>".$personalAll[$shift[$i]]->klasse."</td><td>".$personalAll[$shift[$i]]->handynummer."</td>";
+                echo "<td>".$personalAll[(int) $shift[$i]]->vorname." ".$personalAll[(int) $shift[$i]]->name."</td><td>".$personalAll[(int) $shift[$i]]->klasse."</td><td>".$personalAll[(int) $shift[$i]]->handynummer."</td>";
                 echo "</tr>";
             }
             echo "
-            <tr>
-            <tr id='placeholder'><td colspan='3'><hr></td></tr>
-            <td colspan='3'>
-                <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen, Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
-            </td>
-            </tr>
+                <tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
+                <tr>            
+                    <td colspan='3'>
+                        <div class='unterueberschrift'>Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
+                    </td>
+                </tr>
                 <tr>
                     <td>".$personalAll[1]->vorname." ".$personalAll[1]->name."</td><td>".$personalAll[1]->klasse."</td><td>".$personalAll[1]->handynummer."</td>
                 </tr>
