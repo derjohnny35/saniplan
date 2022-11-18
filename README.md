@@ -12,6 +12,7 @@ id;Name;Vorname;Klasse;Telefonnummer
 ```
 Dabei sind die ersten drei Personen die, die auf der Website als immer erreichbar darstehen
 
+Und eine (bzw. zwei Dateien für gerade und ungerade Wochen) .csv Datei, in der die Schichten eingetragen sind.
 *Beispiel für data/bereitschaftsplanUngeradeWoche.csv*
 ```csv
 0;Montag;Dienstag;Mittwoch;Donnerstag;Freitag
