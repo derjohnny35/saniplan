@@ -14,5 +14,7 @@ Dabei sind die ersten drei Personen die, die auf der Website als immer erreichba
 
 *Beispiel für data/bereitschaftsplanUngeradeWoche.csv*
 ```csv
-
+0;Montag;Dienstag;Mittwoch;Donnerstag;Freitag
+1. Stunde;1:2;1:2;2;1;1:2
+2. Stunde;2;1;2:1;1;2
 ```
