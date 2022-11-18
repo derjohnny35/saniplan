@@ -10,7 +10,8 @@ Eine, in der die Daten der Sanis eingetragen sind.
 id;Name;Vorname;Klasse;Telefonnummer
 1;Mustermann;Max;10c;1234/567890
 ```
-Dabei sind die ersten drei Personen die, die auf der Website als immer erreichbar darstehen
+Dabei sind die ersten drei Personen die, die auf der Website als immer erreichbar darstehen.
+
 Und eine (bzw. zwei Dateien für gerade und ungerade Wochen) .csv Datei, in der die Schichten eingetragen sind.
 
 *Beispiel für data/bereitschaftsplanUngeradeWoche.csv*
