@@ -9,8 +9,8 @@
 <?php
     include("person.php");
 
-    $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
-    $filesize = count(file("data/personalData.csv"));
+    $personalData = fopen('data/personalData1.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!"); //denk dran die Datei wieder zu ändern
+    $filesize = count(file("data/personalData1.csv"));
     $personalAll = [];
     
     error_reporting(0);
@@ -25,7 +25,7 @@
     $week = date("W");
     $shiftnr = null;
     
-    $time = "10:34:45";
+    //$time = "10:34:45";
 
     if(strtotime($time) < strtotime("07:45:00")){
         $shiftnr = 0;
@@ -56,17 +56,21 @@
     } else {
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
     }
-    echo "<div class='clock'>".date("G:i")." Uhr</div>";
+    echo "<div class='clock'>".date("d.m.y")."&emsp;".date("G:i")." Uhr</div>";
     
     switch($shiftnr){
         case 0:
-            echo "Die erste Schicht hat noch nicht begonnen.<br>";
+            echo "Die erste Schicht hat noch nicht begonnen. Möglicherweise ist eine/r der folgenden SchülerInnen schon erreichbar:<br><br>";
+            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
+            endTable($personalAll);
             break;
         case 10:
-            echo "Die letzte Schicht ist bereits vorbei.<br>";
+            echo "Die letzte Schicht ist bereits vorbei. Möglicherweise ist eine/r der folgenden SchülerInnen noch erreichbar:<br><br>";
+            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
+            endTable($personalAll);
             break;
         default:
-            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
+        echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
 
             for($i = 0; $i<$shiftnr+1; $i++){
                 $shift = fgets($bereitschaftsplan);
@@ -78,24 +82,28 @@
                 echo "<td>".$personalAll[(int) $shift[$i]]->vorname." ".$personalAll[(int) $shift[$i]]->name."</td><td>".$personalAll[(int) $shift[$i]]->klasse."</td><td>".$personalAll[(int) $shift[$i]]->handynummer."</td>";
                 echo "</tr>";
             }
-            echo "
-                <tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
-                <tr>            
-                    <td colspan='3'>
-                        <div class='unterueberschrift'>Jederzeit erreichbare Schüler*innen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>".$personalAll[1]->vorname." ".$personalAll[1]->name."</td><td>".$personalAll[1]->klasse."</td><td>".$personalAll[1]->handynummer."</td>
-                </tr>
-                <tr>
-                    <td>".$personalAll[2]->vorname." ".$personalAll[2]->name."</td><td>".$personalAll[2]->klasse."</td><td>".$personalAll[2]->handynummer."</td>
-                </tr>
-                <tr>
-                    <td>".$personalAll[3]->vorname." ".$personalAll[3]->name."</td><td>".$personalAll[3]->klasse."</td><td>".$personalAll[3]->handynummer."</td>
-                </tr>
-            </table>";
+            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
+            <tr>            
+                <td colspan='3'>
+                    <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
+                </td>
+            </tr>";
+            endTable($personalAll);
             break;
+    }
+
+    function endTable($personalAll) {
+        echo "
+        <tr>
+            <td>".$personalAll[1]->vorname." ".$personalAll[1]->name."</td><td>".$personalAll[1]->klasse."</td><td>".$personalAll[1]->handynummer."</td>
+        </tr>
+        <tr>
+            <td>".$personalAll[2]->vorname." ".$personalAll[2]->name."</td><td>".$personalAll[2]->klasse."</td><td>".$personalAll[2]->handynummer."</td>
+        </tr>
+        <tr>
+            <td>".$personalAll[3]->vorname." ".$personalAll[3]->name."</td><td>".$personalAll[3]->klasse."</td><td>".$personalAll[3]->handynummer."</td>
+        </tr>
+        </table>";
     }
 ?>
     <div class='footer'>
