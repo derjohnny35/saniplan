@@ -20,3 +20,4 @@ Und eine (bzw. zwei Dateien für gerade und ungerade Wochen) .csv Datei, in der 
 1. Stunde;1:2;1:2;2;1;1:2
 2. Stunde;2;1;2:1;1;2
 ```
+In jeder Schicht müssen die Ids der eingeteilten Sanis mit : getrennt eingetragen werden.
