@@ -108,7 +108,7 @@
 ?>
     <div class='footer'>
         <div id='left'>Stand des Bereitschaftsplans: 17.11.2022</div>
-        <div id='middle'>Version 1.0</div>
+        <div id='middle'>Version 1.1</div>
         <div id='right'>©Jonathan Hostadt 2022</div>
     </div>
 </body>
