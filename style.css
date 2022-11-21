@@ -21,7 +21,7 @@ td {
     margin-left: auto;
     margin-right: auto;
 }
-tr:nth-child(odd) {
+tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 .clock {
@@ -71,4 +71,7 @@ hr {
 #placeholder {
     height: 80px;
     border-top: black dotted 2px;
+}
+#grey {
+    background-color: #f2f2f2;
 }

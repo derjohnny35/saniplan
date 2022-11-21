@@ -13,19 +13,18 @@
     $filesize = count(file("data/personalData.csv"));
     $personalAll = [];
     
-    error_reporting(0);
     while(!feof($personalData)) {
         $temp = explode(";", fgets($personalData));
         $personalAll[] = new Person($temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
     }
-    error_reporting(E_ALL);
 
     $time = date("G:i:s");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
     
-    //$time = "10:34:45";
+    //$time = "12:34:45";
+    //$day = 3;
 
     if(strtotime($time) < strtotime("07:45:00")){
         $shiftnr = 0;
@@ -53,8 +52,10 @@
 
     if($week%2==0){
         $bereitschaftsplan = fopen('data/bereitschaftsplanGeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
+        $bereitschaftsplanm = fopen('data/bereitschaftsplanGeradeWocheMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
     } else {
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
+        $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
     }
     echo "<div class='clock'>".date("d.m.y")."&emsp;".date("G:i")." Uhr</div>";
     
@@ -70,7 +71,7 @@
             endTable($personalAll);
             break;
         default:
-        echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
+            echo "<table class='center' border='1'><tr><th colspan='3' id='grey'>Hauptgebäude</th></tr><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
 
             for($i = 0; $i<$shiftnr+1; $i++){
                 $shift = fgets($bereitschaftsplan);
@@ -81,6 +82,23 @@
                 echo "<tr>";
                 echo "<td>".$personalAll[(int) $shift[$i]]->vorname." ".$personalAll[(int) $shift[$i]]->name."</td><td>".$personalAll[(int) $shift[$i]]->klasse."</td><td>".$personalAll[(int) $shift[$i]]->handynummer."</td>";
                 echo "</tr>";
+            }
+
+            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr><tr><th colspan='3'>Musikschule</th></tr>";
+
+            for($i = 0; $i<$shiftnr+1; $i++){
+                $shift = fgets($bereitschaftsplanm);
+            }
+            $shift = explode(":",explode(";", $shift)[$day]);            
+
+            for($i = 0; $i<count($shift); $i++){
+                if(!$personalAll[(int) $shift[$i]]->vorname == 0){
+                    echo "<tr>";
+                    echo "<td>".$personalAll[(int) $shift[$i]]->vorname." ".$personalAll[(int) $shift[$i]]->name."</td><td>".$personalAll[(int) $shift[$i]]->klasse."</td><td>".$personalAll[(int) $shift[$i]]->handynummer."</td>";
+                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='3'>Es ist für die aktuelle Schicht niemand verfügbar!<td></tr>";
+                }
             }
             echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
             <tr>            
@@ -108,7 +126,7 @@
 ?>
     <div class='footer'>
         <div id='left'>Stand des Bereitschaftsplans: 17.11.2022</div>
-        <div id='middle'>Version 1.1</div>
+        <div id='middle'>Version 1.2</div>
         <div id='right'>©Jonathan Hostadt 2022</div>
     </div>
 </body>
