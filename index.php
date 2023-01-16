@@ -25,7 +25,7 @@
     
     //$time = "12:34:45";
     //$day = 3;
-
+    
     if(strtotime($time) < strtotime("07:45:00")){
         $shiftnr = 0;
     } else if(strtotime($time) >= strtotime("07:45:00" ) && strtotime($time) < strtotime("08:40:00" )){
@@ -77,14 +77,14 @@
                 $shift = fgets($bereitschaftsplan);
             }
             $shift = explode(":",explode(";", $shift)[$day]);            
-
+            $shift = replaceNameWithId($shift, $personalAll);
             for($i = 0; $i<count($shift); $i++){
                 echo "<tr>";
                 echo "<td>".$personalAll[(int) $shift[$i]]->vorname." ".$personalAll[(int) $shift[$i]]->name."</td><td>".$personalAll[(int) $shift[$i]]->klasse."</td><td>".$personalAll[(int) $shift[$i]]->handynummer."</td>";
                 echo "</tr>";
             }
 
-            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr><tr><th colspan='3'>Musikschule</th></tr>";
+            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr><tr><th colspan='3' id='grey'>Musikschule</th></tr>";
 
             for($i = 0; $i<$shiftnr+1; $i++){
                 $shift = fgets($bereitschaftsplanm);
@@ -110,6 +110,18 @@
             break;
     }
 
+    function replaceNameWithId($shift, $personalAll){
+        for($i = 0; $i<count($shift); $i++){
+            for($j = 1; $j<count($personalAll); $j++){
+                if(strcasecmp($shift[$i],$personalAll[$j]->vorname." ".$personalAll[$j]->name) == 0){
+                    $shift[$i] = $personalAll[$j]->id;
+                    break;
+                }
+            }
+        }
+        return $shift;
+    }
+
     function endTable($personalAll) {
         echo "
         <tr>
@@ -126,7 +138,7 @@
 ?>
     <div class='footer'>
         <div id='left'>Stand des Bereitschaftsplans: 17.11.2022</div>
-        <div id='middle'>Version 1.2</div>
-        <div id='right'>©Jonathan Hostadt 2022</div>
+        <div id='middle'>Version 1.3</div>
+        <div id='right'>©Jonathan Hostadt 2023</div>
     </div>
 </body>
