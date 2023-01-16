@@ -90,7 +90,7 @@
                 $shift = fgets($bereitschaftsplanm);
             }
             $shift = explode(":",explode(";", $shift)[$day]);            
-
+            $shift = replaceNameWithId($shift, $personalAll);
             for($i = 0; $i<count($shift); $i++){
                 if(!$personalAll[(int) $shift[$i]]->vorname == 0){
                     echo "<tr>";
