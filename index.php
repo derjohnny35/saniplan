@@ -15,15 +15,14 @@
     
     while(!feof($personalData)) {
         $temp = explode(";", fgets($personalData));
-        $personalAll[] = new Person($temp[0], $temp[1], $temp[2], $temp[3], $temp[4]);
+        $personalAll[] = new Person($temp[0], $temp[1], $temp[2], $temp[3], $temp[4], $temp[5]);
     }
 
     $time = date("G:i:s");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    
-    //$time = "12:34:45";
+    $time = "12:34:45";
     //$day = 3;
     
     if(strtotime($time) < strtotime("07:45:00")){
@@ -113,7 +112,7 @@
     function replaceNameWithId($shift, $personalAll){
         for($i = 0; $i<count($shift); $i++){
             for($j = 1; $j<count($personalAll); $j++){
-                if(strcasecmp($shift[$i],$personalAll[$j]->vorname." ".$personalAll[$j]->name) == 0){
+                if(strcasecmp($shift[$i],$personalAll[$j]->nick) == 0){
                     $shift[$i] = $personalAll[$j]->id;
                     break;
                 }
