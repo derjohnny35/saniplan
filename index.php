@@ -22,7 +22,7 @@
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    $time = "12:34:45";
+    //$time = "12:34:45";
     //$day = 3;
     
     if(strtotime($time) < strtotime("07:45:00")){
