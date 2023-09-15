@@ -3,27 +3,33 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
 }
+
 table {
     font-size: 60%;
     text-align: center;
     width: 70%;
     border-style: none;
 }
+
 th {
     height: 50px;
     border-style: none;
 }
+
 td {
     height: 30px;
     border-style: none;
 }
+
 .center {
     margin-left: auto;
     margin-right: auto;
 }
+
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
 .clock {
     padding-left: 1%;
     padding-right: 1%;
@@ -33,6 +39,7 @@ tr:nth-child(even) {
     border-radius: 25px;
     margin-bottom: 10px;
 }
+
 .footer {
     position: fixed;
     left: 0;
@@ -43,23 +50,40 @@ tr:nth-child(even) {
     font-size: 40%;
     display: flex;
 }
-#left  {
+
+.header {
+    position: fixed;
+    padding: 15px;
+    left: 0;
+    top: 0;
+    background-color: #f2f2f2;
+    color: black;
+    display: flex;
+    font-size: 40%;
+}
+
+#left {
     text-align: left;
     padding-left: 5px;
 }
+
 #middle {
     margin: auto;
 }
+
 #right {
     text-align: right;
     padding-right: 5px;
 }
+
 hr {
-   border: .5px dashed;
+    border: .5px dashed;
 }
+
 #hr {
     background-color: white;
 }
+
 .unterueberschrift {
     font-weight: bold;
     margin-left: auto;
@@ -68,10 +92,12 @@ hr {
     font-size: 100%;
     margin-bottom: 10px;
 }
+
 #placeholder {
     height: 80px;
     border-top: black dotted 2px;
 }
+
 #grey {
     background-color: #f2f2f2;
 }

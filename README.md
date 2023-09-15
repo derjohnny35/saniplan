@@ -1,9 +1,11 @@
 # saniplan
-Website, um den Bereitschaftsplan anzuzeigen
+Website, um einen Bereitschaftsplan für Schulsanitäter im am LGÖ üblichen Zeitplan anzuzeigen.
 
-## Benutzung
-Um den Bereitschaftsplan anzuzeigen, braucht es zwei .csv Dateien.
-Eine, in der die Daten der Sanis eingetragen sind.
+## Konfiguration
+Die Daten für den Bereitschaftsplan befinden sich in .csv Dateien.
+
+Die Stammdaten der Schulsanis befinden sich in der 'personalData.csv'
+In diese werden die Daten id (muss zwingend bei 1 beginnen und aufsteigen), Name, Vorname, Klasse, Telefonnummer, Nickname ab Zeile zwei jeweils mit ; getrennt eingetragen.
 
 *Beispiel für data/personalData.csv*
 ```csv
@@ -11,9 +13,10 @@ id;Name;Vorname;Klasse;Telefonnummer;Nickname
 1;Mustermann;Max;10c;1234/567890;Maxi
 ...
 ```
-Dabei sind die ersten drei Personen die, die auf der Website als immer erreichbar darstehen.
 
-Und eine (bzw. zwei Dateien für gerade und ungerade Wochen) .csv Datei, in der die Schichten eingetragen sind.
+Die Schichteinteilung erfolgt in weiteren Dateien. Es gibt eine Datei für die Musikschule und eine Datei für das Hauptgebäude ('bereitschaftsplan.csv' und 'bereitschaftsplanMusikschule.csv'). Falls die Option "useTwoWeekPlan" aktiviert ist bedarf es nochmal zwei extra Dateien für die ungeraden Wochen ('bereitschaftsplanUngeradeWoche.csv' und 'bereitschaftsplanUngeradeWocheMusikschule.csv').
+In diesen Dateien werden die eingeteilten Sanis im typischen Raster eingetragen. In der ersten Spalte stehen die Bezeichnungen der Wochentage. In der ersten Spalte steht jeweils die Bezeichnung der Schicht (irrelevant, kann auch leer gelassen werden).
+Alle weiteren Felder werden mit den jeweils eingeteilten Personen eingetragen. In jeder Schicht müssen die Id, Vorname + Nachname oder der Nickname der eingeteilten Person mit : getrennt eingetragen werden.
 
 *Beispiel für data/bereitschaftsplanUngeradeWoche.csv*
 ```csv
@@ -21,4 +24,3 @@ Und eine (bzw. zwei Dateien für gerade und ungerade Wochen) .csv Datei, in der 
 1. Stunde;Maxi:Johnny;Franzi;Rudi;Leni;Uli
 2. Stunde;...
 ```
-In jeder Schicht müssen die Ids der eingeteilten Sanis mit : getrennt eingetragen werden.
