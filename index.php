@@ -1,151 +1,45 @@
+<?php
+// Pfad zur JSON-Datei
+$json_file = 'config.json';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // JSON-Daten aus dem Formular erhalten
+    $json_data = [
+        'useTwoWeekPlan' => isset($_POST['useTwoWeekPlan']) ? true : false,
+        'emergencyContacts' => explode(',', $_POST['emergencyContacts']),
+    ];
+
+    // JSON-Daten in eine Zeichenkette konvertieren
+    $json_string = json_encode($json_data, JSON_PRETTY_PRINT);
+
+    // JSON-Daten in die Datei schreiben
+    if (file_put_contents($json_file, $json_string)) {
+        echo 'JSON-Daten erfolgreich gespeichert.';
+        header('Location: ../');
+    } else {
+        echo 'Fehler beim Speichern der JSON-Daten.';
+    }
+}
+
+$json_data = file_get_contents($json_file);
+$json_data = json_decode($json_data, true);
+?>
+
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8" />
-    <title>Bereitschaftsplan Schulsanis</title>
-    <meta http-equiv="refresh" content="15">
-    <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
-    <link rel="stylesheet" href="style.css">
+    <title>Einstellungen</title>
 </head>
-
 <body>
-    <a href="settings">
-        <div class="header">Einstellungen</div>
-    </a>
-
-    <?php
-    include("person.php");
-    include("config.php");
-    $config = new Config();
-
-    $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
-    $filesize = count(file("data/personalData.csv"));
-    $personalAll = [];
-
-    while (!feof($personalData)) {
-        $temp = explode(";", fgets($personalData));
-        $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
-    }
-
-    $time = date("G:i:s");
-    $day = date("N");
-    $week = date("W");
-    $shiftnr = null;
-    $time = "08:34:45";
-    $day = 1;
-
-    if (strtotime($time) < strtotime("07:45:00")) {
-        $shiftnr = 0;
-    } else if (strtotime($time) >= strtotime("07:45:00") && strtotime($time) < strtotime("08:40:00")) {
-        $shiftnr = 1;
-    } else if (strtotime($time) >= strtotime("08:40:00") && strtotime($time) < strtotime("09:30:00")) {
-        $shiftnr = 2;
-    } else if (strtotime($time) >= strtotime("09:30:00") && strtotime($time) < strtotime("10:15:00")) {
-        $shiftnr = 3;
-    } else if (strtotime($time) >= strtotime("10:15:00") && strtotime($time) < strtotime("10:35:00")) {
-        $shiftnr = 4;
-    } else if (strtotime($time) >= strtotime("10:35:00") && strtotime($time) < strtotime("11:25:00")) {
-        $shiftnr = 5;
-    } else if (strtotime($time) >= strtotime("11:25:00") && strtotime($time) < strtotime("12:10:00")) {
-        $shiftnr = 6;
-    } else if (strtotime($time) >= strtotime("12:10:00") && strtotime($time) < strtotime("12:25:00")) {
-        $shiftnr = 7;
-    } else if (strtotime($time) >= strtotime("12:25:00") && strtotime($time) < strtotime("13:15:00")) {
-        $shiftnr = 8;
-    } else if (strtotime($time) >= strtotime("13:15:00") && strtotime($time) < strtotime("14:00:00")) {
-        $shiftnr = 9;
-    } else if (strtotime($time) >= strtotime("14:00:00")) {
-        $shiftnr = 10;
-    }
-
-    if ($week % 2 == 0 || ($config->config["useTwoWeekPlan"] == false)) {
-        $bereitschaftsplan = fopen('data/bereitschaftsplan.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-        $bereitschaftsplanm = fopen('data/bereitschaftsplanMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-    } else {
-        $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-        $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-    }
-    echo "<div class='clock'>" . date("d.m.y") . "&emsp;" . date("G:i") . " Uhr</div>";
-
-    switch ($shiftnr) {
-        case 0:
-            echo "Die erste Schicht hat noch nicht begonnen. Möglicherweise ist eine/r der folgenden SchülerInnen schon erreichbar:<br><br>";
-            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
-            endTable($personalAll, $config);
-            break;
-        case 10:
-            echo "Die letzte Schicht ist bereits vorbei. Möglicherweise ist eine/r der folgenden SchülerInnen noch erreichbar:<br><br>";
-            echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
-            endTable($personalAll, $config);
-            break;
-        default:
-            echo "<table class='center' border='1'><tr><th colspan='3' id='grey'>Hauptgebäude</th></tr><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
-
-            for ($i = 0; $i < $shiftnr + 1; $i++) {
-                $shift = fgets($bereitschaftsplan);
-            }
-            $shift = explode(":", explode(";", $shift)[$day]);
-            for ($i = 0; $i < count($shift); $i++) {
-                echo "<tr>";
-                echo "<td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->vorname . " " . $personalAll[getPersonId($personalAll, $shift[$i])]->name . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->klasse . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->handynummer . "</td>";
-                echo "</tr>";
-            }
-
-            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr><tr><th colspan='3' id='grey'>Musikschule</th></tr>";
-
-            for ($i = 0; $i < $shiftnr + 1; $i++) {
-                $shift = fgets($bereitschaftsplanm);
-            }
-            $shift = explode(":", explode(";", $shift)[$day]);
-            for ($i = 0; $i < count($shift); $i++) {
-                if (!$personalAll[(int) $shift[$i]]->vorname == 0) {
-                    echo "<tr>";
-                    echo "<td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->vorname . " " . $personalAll[getPersonId($personalAll, $shift[$i])]->name . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->klasse . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->handynummer . "</td>";
-                    echo "</tr>";
-                } else {
-                    echo "<tr><td colspan='3'>Es ist für die aktuelle Schicht niemand verfügbar!<td></tr>";
-                }
-            }
-            echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
-            <tr>            
-                <td colspan='3'>
-                    <div class='unterueberschrift'>Jederzeit erreichbare SchülerInnen für schwere Notfälle bzw. falls niemand sonst erreichbar ist:</div>
-                </td>
-            </tr>";
-            endTable($personalAll, $config);
-            break;
-    }
-
-    function getPersonId($personalAll, $value)
-    {
-        if (is_numeric($value)) {
-            $value = (int) $value;
-        }
-        for ($i = 0; $i < sizeof($personalAll); $i++) {
-            if (strcmp($personalAll[$i]->id, $value) == 0) {
-                return $i;
-            }
-            if (strcmp($personalAll[$i]->nick, $value) == 0) {
-                return $i;
-            }
-            if (strcmp($personalAll[$i]->vorname . " " . $personalAll[$i]->name, $value) == 0) {
-                return $i;
-            }
-        }
-        return 0;
-    }
-
-    function endTable($personalAll, $config)
-    {
-        for ($i = 0; $i < sizeof($config->config["emergencyContacts"]); $i++) {
-            $id = $config->config["emergencyContacts"][$i];
-            echo "
-            <tr>
-                <td>" . $personalAll[$id]->vorname . " " . $personalAll[$id]->name . "</td><td>" . $personalAll[$id]->klasse . "</td><td>" . $personalAll[$id]->handynummer . "</td>
-            </tr>";
-        }
-        echo "</table>";
-    }
-    include("footer.html");
-    ?>
+    <h1>Einstellungen</h1>
+    <form action="" method="post">
+        <label for="useTwoWeekPlan">verschiedene Pläne für gerade/ungerade Woche</label>
+        <input type="checkbox" name="useTwoWeekPlan" id="useTwoWeekPlan" <?php echo $json_data['useTwoWeekPlan'] ? 'checked' : ''; ?>>
+        <br><br>
+        <label for="emergencyContacts">Ids von den Notfallkontakten</label>
+        <input type="text" name="emergencyContacts" id="emergencyContacts" value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
+        <br><br>
+        <input type="submit" value="Einstellungen speichern">
+    </form>
+</body>
+</html>
