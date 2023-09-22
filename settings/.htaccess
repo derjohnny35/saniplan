@@ -1,0 +1,4 @@
+AuthType Basic
+AuthUserFile C:\xampp\htdocs\saniplan\settings\.htpasswd
+AuthName "Saniplan Einstellungen - Login"
+Require valid-user
