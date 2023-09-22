@@ -13,6 +13,8 @@ include("person.php");
     <meta http-equiv="refresh" content="<?php echo $config->config["refreshRate"]; ?>">
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -68,7 +70,7 @@ include("person.php");
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWoche.csv!<br><br>" . verantwortliche($config));
         $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWocheMusikschule.csv!<br><br>" . verantwortliche($config));
     }
-    echo "<div class='clock'>" . date("d.m.y") . "&emsp;" . date("G:i") . " Uhr</div>";
+    echo "<div class='clock'>" . date("d.m.y") . "&emsp;<span id='time'>" . date("G:i:s") . "</span></div>";
 
     switch ($shiftnr) {
         case 0:
@@ -161,5 +163,12 @@ include("person.php");
         $result = $result . " oder " . $config->config["verantwortliche"][$temp + 1] . " kontaktieren";
         return $result;
     }
-    include("footer.html");
     ?>
+    <div class='footer'>
+        <div id='left'>Stand des Bereitschaftsplans: <?php echo $config->config["stand"]; ?></div>
+        <div id='middle'>Version 1.4</div>
+        <div id='right'>©Jonathan Hostadt 2023</div>
+    </div>
+</body>
+
+</html>

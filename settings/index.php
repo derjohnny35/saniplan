@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'refreshRate' => $_POST['refreshRate'],
         'verantwortliche' => explode(',', $_POST['verantwortliche']),
         'reportingLevel' => $_POST['reportingLevel'],
+        'stand' => $_POST['stand'],
     ];
 
     // JSON-Daten in eine Zeichenkette konvertieren
@@ -34,34 +35,64 @@ $json_data = json_decode($json_data, true);
 
 <head>
     <title>Einstellungen</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
+    <script src="../script.js" type="text/javascript"></script>
+    <style>
+        body {
+            font-size: 120%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: auto 250px auto;
+            justify-content: left;
+            gap: 20px;
+        }
+
+        label {
+            padding-right: 10px;
+        }
+
+        input {
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Einstellungen</h1>
-    <form action="" method="post">
+    <form action="" method="post" class="form-container">
         <label for="useTwoWeekPlan">verschiedene Pläne für gerade/ungerade Woche</label>
         <input type="checkbox" name="useTwoWeekPlan" id="useTwoWeekPlan" <?php echo $json_data['useTwoWeekPlan'] ? 'checked' : ''; ?>>
-        <br><br>
+        <br>
 
-        <label for="emergencyContacts">Ids von den Notfallkontakten</label>
+        <label for="emergencyContacts">Ids der Notfallkontakte</label>
         <input type="text" name="emergencyContacts" id="emergencyContacts"
             value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
-        <br><br>
+        <br>
 
         <label for="refreshRate">Aktualisierungsrate der Website [s]</label>
         <input type="text" name="refreshRate" id="refreshRate" value="<?php echo $json_data['refreshRate']; ?>">
-        <br><br>
+        <br>
 
         <label for="verantwortliche">verantwortliche Personen für Fehlerbehebung</label>
         <input type="text" name="verantwortliche" id="verantwortliche"
             value="<?php echo implode(',', $json_data['verantwortliche']); ?>">
-        <br><br>
+        <br>
 
         <label for="reportingLevel">Reporting Level (0 = keine, 1 = nur Errors, 2 = Warnings und Errors)</label>
-        <input type="text" name="reportingLevel" id="reportingLevel" value="<?php echo $json_data['reportingLevel']; ?>">
-        <br><br>
+        <input type="text" name="reportingLevel" id="reportingLevel"
+            value="<?php echo $json_data['reportingLevel']; ?>">
+        <br>
 
-        <input type="submit" value="Einstellungen speichern">
+        <label for="stand">Stand des Bereitschaftsplans</label>
+        <input type="text" name="stand" id="stand" value="<?php echo $json_data['stand']; ?>">
+        <input type="button" value="Heute" onclick="aktuellesDatum()" style="width: 100px" />
+
+        <input type="submit" value="Einstellungen speichern" style="height: 40px">
     </form>
 </body>
 
