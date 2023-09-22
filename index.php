@@ -1,7 +1,8 @@
 <?php
-include("person.php");
 include("config.php");
 $config = new Config();
+error_reporting($config->config["reportingLevel"]);
+include("person.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@ $config = new Config();
     </a>
 
     <?php
-    $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
+    $personalData = fopen('data/personalData.csv', "r") or die("Fehler beim öffnen von data/personalData.csv!<br><br>" . verantwortliche($config));
     $filesize = count(file("data/personalData.csv"));
     $personalAll = [];
 
@@ -61,11 +62,11 @@ $config = new Config();
     }
 
     if ($week % 2 == 0 || ($config->config["useTwoWeekPlan"] == false)) {
-        $bereitschaftsplan = fopen('data/bereitschaftsplan.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-        $bereitschaftsplanm = fopen('data/bereitschaftsplanMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
+        $bereitschaftsplan = fopen('data/bereitschaftsplan.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
+        $bereitschaftsplanm = fopen('data/bereitschaftsplanMusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanMusikschule.csv!<br><br>" . verantwortliche($config));
     } else {
-        $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
-        $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("<br>Ein Fehler is aufgetreten!<br>Herrn S. oder J.H kontaktieren!");
+        $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWoche.csv!<br><br>" . verantwortliche($config));
+        $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWocheMusikschule.csv!<br><br>" . verantwortliche($config));
     }
     echo "<div class='clock'>" . date("d.m.y") . "&emsp;" . date("G:i") . " Uhr</div>";
 
@@ -147,6 +148,18 @@ $config = new Config();
             </tr>";
         }
         echo "</table>";
+    }
+
+    function verantwortliche($config)
+    {
+        $temp = 0;
+        $result = $config->config["verantwortliche"][0];
+        for ($i = 1; $i < sizeof($config->config["verantwortliche"]) - 1; $i++) {
+            $result = $result . ", " . $config->config["verantwortliche"][$i];
+            $temp = $i;
+        }
+        $result = $result . " oder " . $config->config["verantwortliche"][$temp + 1] . " kontaktieren";
+        return $result;
     }
     include("footer.html");
     ?>

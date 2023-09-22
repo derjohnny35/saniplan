@@ -5,5 +5,11 @@
         "2",
         "3"
     ],
-    "refreshRate": "15"
+    "refreshRate": "15",
+    "verantwortliche": [
+        "Dieter",
+        "Bernd",
+        "Klaus"
+    ],
+    "reportingLevel": "1"
 }

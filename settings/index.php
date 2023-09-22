@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'useTwoWeekPlan' => isset($_POST['useTwoWeekPlan']) ? true : false,
         'emergencyContacts' => explode(',', $_POST['emergencyContacts']),
         'refreshRate' => $_POST['refreshRate'],
+        'verantwortliche' => explode(',', $_POST['verantwortliche']),
+        'reportingLevel' => $_POST['reportingLevel'],
     ];
 
     // JSON-Daten in eine Zeichenkette konvertieren
@@ -17,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (file_put_contents($json_file, $json_string)) {
         echo 'JSON-Daten erfolgreich gespeichert.';
         header('Location: ../');
+        exit();
     } else {
         echo 'Fehler beim Speichern der JSON-Daten.';
     }
@@ -39,13 +42,25 @@ $json_data = json_decode($json_data, true);
         <label for="useTwoWeekPlan">verschiedene Pläne für gerade/ungerade Woche</label>
         <input type="checkbox" name="useTwoWeekPlan" id="useTwoWeekPlan" <?php echo $json_data['useTwoWeekPlan'] ? 'checked' : ''; ?>>
         <br><br>
+
         <label for="emergencyContacts">Ids von den Notfallkontakten</label>
         <input type="text" name="emergencyContacts" id="emergencyContacts"
             value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
         <br><br>
+
         <label for="refreshRate">Aktualisierungsrate der Website [s]</label>
         <input type="text" name="refreshRate" id="refreshRate" value="<?php echo $json_data['refreshRate']; ?>">
         <br><br>
+
+        <label for="verantwortliche">verantwortliche Personen für Fehlerbehebung</label>
+        <input type="text" name="verantwortliche" id="verantwortliche"
+            value="<?php echo implode(',', $json_data['verantwortliche']); ?>">
+        <br><br>
+
+        <label for="reportingLevel">Reporting Level (0 = keine, 1 = nur Errors, 2 = Warnings und Errors)</label>
+        <input type="text" name="reportingLevel" id="reportingLevel" value="<?php echo $json_data['reportingLevel']; ?>">
+        <br><br>
+
         <input type="submit" value="Einstellungen speichern">
     </form>
 </body>
