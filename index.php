@@ -1,10 +1,15 @@
+<?php
+include("person.php");
+include("config.php");
+$config = new Config();
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8" />
     <title>Bereitschaftsplan Schulsanis</title>
-    <meta http-equiv="refresh" content="15">
+    <meta http-equiv="refresh" content="<?php echo $config->config["refreshRate"]; ?>">
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,10 +20,6 @@
     </a>
 
     <?php
-    include("person.php");
-    include("config.php");
-    $config = new Config();
-
     $personalData = fopen('data/personalData.csv', "r") or die("Ein Fehler is aufgetreten!\nHerrn S. oder J.H kontaktieren!");
     $filesize = count(file("data/personalData.csv"));
     $personalAll = [];

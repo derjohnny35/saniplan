@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json_data = [
         'useTwoWeekPlan' => isset($_POST['useTwoWeekPlan']) ? true : false,
         'emergencyContacts' => explode(',', $_POST['emergencyContacts']),
+        'refreshRate' => $_POST['refreshRate'],
     ];
 
     // JSON-Daten in eine Zeichenkette konvertieren
@@ -27,9 +28,11 @@ $json_data = json_decode($json_data, true);
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Einstellungen</title>
 </head>
+
 <body>
     <h1>Einstellungen</h1>
     <form action="" method="post">
@@ -37,9 +40,14 @@ $json_data = json_decode($json_data, true);
         <input type="checkbox" name="useTwoWeekPlan" id="useTwoWeekPlan" <?php echo $json_data['useTwoWeekPlan'] ? 'checked' : ''; ?>>
         <br><br>
         <label for="emergencyContacts">Ids von den Notfallkontakten</label>
-        <input type="text" name="emergencyContacts" id="emergencyContacts" value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
+        <input type="text" name="emergencyContacts" id="emergencyContacts"
+            value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
+        <br><br>
+        <label for="refreshRate">Aktualisierungsrate der Website [s]</label>
+        <input type="text" name="refreshRate" id="refreshRate" value="<?php echo $json_data['refreshRate']; ?>">
         <br><br>
         <input type="submit" value="Einstellungen speichern">
     </form>
 </body>
+
 </html>
