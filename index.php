@@ -36,8 +36,8 @@ include("person.php");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    $time = "08:34:45";
-    $day = 1;
+    //$time = "08:34:45";
+    //$day = 1;
 
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
