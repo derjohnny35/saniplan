@@ -44,6 +44,17 @@ tr:nth-child(even) {
     margin-bottom: 10px;
 }
 
+.header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    font-size: 40%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .footer {
     position: fixed;
     left: 0;
@@ -53,30 +64,14 @@ tr:nth-child(even) {
     background-color: var(--colorSecondary);
     font-size: 40%;
     display: flex;
+    justify-content: space-between;
 }
 
-.header {
-    position: fixed;
-    padding: 15px;
-    left: 0;
-    top: 0;
-    background-color: var(--colorSecondary);
-    color: black;
-    display: flex;
-    font-size: 40%;
-}
-
-#left {
-    text-align: left;
+.left {
     padding-left: 5px;
 }
 
-#middle {
-    margin: auto;
-}
-
-#right {
-    text-align: right;
+.right {
     padding-right: 5px;
 }
 
@@ -98,10 +93,16 @@ hr {
 }
 
 #placeholder {
-    height: 80px;
+    height: 60px;
     border-top: black dotted 2px;
 }
 
 #grey {
+    background-color: var(--colorSecondary);
+}
+
+#settings {
+    cursor: pointer;
+    padding: 15px;
     background-color: var(--colorSecondary);
 }

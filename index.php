@@ -14,14 +14,12 @@ include("person.php");
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" type="text/javascript"></script>
-
 </head>
 
 <body>
-    <a href="settings">
-        <div class="header">Einstellungen</div>
-    </a>
-
+    <div class="header">
+        <div id="settings" class="left" onclick="link('settings')">Einstellungen</div>
+    </div>
     <?php
     $personalData = fopen('data/personalData.csv', "r") or die("Fehler beim öffnen von data/personalData.csv!<br><br>" . verantwortliche($config));
     $filesize = count(file("data/personalData.csv"));
@@ -36,8 +34,8 @@ include("person.php");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    //$time = "08:34:45";
-    //$day = 1;
+    $time = "08:34:45";
+    $day = 1;
 
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
@@ -164,10 +162,13 @@ include("person.php");
         return $result;
     }
     ?>
+    <br>
     <div class='footer'>
-        <div id='left'>Stand des Bereitschaftsplans: <?php echo $config->config["stand"]; ?></div>
-        <div id='middle'>Version 1.4</div>
-        <div id='right'>©Jonathan Hostadt 2023</div>
+        <div class='left'>Stand des Bereitschaftsplans:
+            <?php echo $config->config["stand"]; ?>
+        </div>
+        <div>Version 1.4</div>
+        <div class='right'>©Jonathan Hostadt 2023</div>
     </div>
 </body>
 

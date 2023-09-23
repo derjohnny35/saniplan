@@ -1,9 +1,14 @@
-setInterval(aktualisiereUhr, 1000);
+var interval = setInterval(aktualisiereUhr, 1000);
 
 function aktualisiereUhr() {
     const jetzt = new Date();
-    const uhrElement = document.getElementById('time');
-    uhrElement.innerHTML = jetzt.toLocaleTimeString();
+    try {
+        const uhrElement = document.getElementById('time');
+        uhrElement.innerHTML = jetzt.toLocaleTimeString();
+    }
+    catch (err) {
+        clearInterval(interval);
+    }
 }
 
 function aktuellesDatum() {
@@ -16,4 +21,8 @@ function aktuellesDatum() {
 
     const datumFeld = document.getElementById('stand');
     datumFeld.value = tag + '.' + monat + '.' + jahr;
+}
+
+function link(destination) {
+    window.location.href = destination;
 }
