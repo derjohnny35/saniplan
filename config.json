@@ -1,0 +1,15 @@
+{
+    "useTwoWeekPlan": false,
+    "emergencyContacts": [
+        "1",
+        "2",
+        "3"
+    ],
+    "verantwortliche": [
+        "Dieter",
+        "Bernd",
+        "Klaus"
+    ],
+    "reportingLevel": "2",
+    "stand": "26.09.2023"
+}
