@@ -8,7 +8,7 @@ function aktualisiereUhr() {
         reloadOnShiftChange();
     }
     catch (err) {
-        if (window.location.pathname != "/saniplan/settings/") {
+        if (window.location.pathname.split("/").at(-2) != "settings") {
             clearInterval(intervalTimer);
             alert("Es ist ein Fehler aufgetreten!");
             alert(err);
