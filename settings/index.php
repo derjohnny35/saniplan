@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json_data = [
         'useTwoWeekPlan' => isset($_POST['useTwoWeekPlan']) ? true : false,
         'emergencyContacts' => explode(',', $_POST['emergencyContacts']),
-        'refreshRate' => $_POST['refreshRate'],
         'verantwortliche' => explode(',', $_POST['verantwortliche']),
         'reportingLevel' => $_POST['reportingLevel'],
         'stand' => $_POST['stand'],
@@ -40,6 +39,7 @@ $json_data = json_decode($json_data, true);
     <script src="../script.js" type="text/javascript"></script>
     <style>
         body {
+            margin-left: 35px;
             font-size: 120%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -72,10 +72,6 @@ $json_data = json_decode($json_data, true);
         <label for="emergencyContacts">Ids der Notfallkontakte</label>
         <input type="text" name="emergencyContacts" id="emergencyContacts"
             value="<?php echo implode(',', $json_data['emergencyContacts']); ?>">
-        <br>
-
-        <label for="refreshRate">Aktualisierungsrate der Website [s]</label>
-        <input type="text" name="refreshRate" id="refreshRate" value="<?php echo $json_data['refreshRate']; ?>">
         <br>
 
         <label for="verantwortliche">verantwortliche Personen für Fehlerbehebung</label>
