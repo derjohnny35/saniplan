@@ -17,13 +17,14 @@ id;Name;Vorname;Klasse;Telefonnummer;Nickname
 
 Die Schichteinteilung erfolgt in weiteren Dateien. Es gibt eine Datei für die Musikschule und eine Datei für das Hauptgebäude ('bereitschaftsplan.csv' und 'bereitschaftsplanMusikschule.csv'). Falls die Option "useTwoWeekPlan" aktiviert ist bedarf es nochmal zwei extra Dateien für die ungeraden Wochen ('bereitschaftsplanUngeradeWoche.csv' und 'bereitschaftsplanUngeradeWocheMusikschule.csv').
 
-In diesen Dateien werden die eingeteilten Sanis im typischen Raster eingetragen. In der ersten Spalte stehen die Bezeichnungen der Wochentage. In der ersten Spalte steht jeweils die Bezeichnung der Schicht (irrelevant, kann auch leer gelassen werden).
+In diesen Dateien werden die eingeteilten Sanis im typischen Raster eingetragen. In der ersten Spalte steht jeweils die Bezeichnung der Schicht (letztendlich ist es egal, was drin steht. Eine Zeile muss aber am Anfang stehen).
 
 Alle weiteren Felder werden mit den jeweils eingeteilten Personen eingetragen. In jeder Schicht müssen die Id, Vorname + Nachname oder der Nickname der eingeteilten Person mit : getrennt eingetragen werden.
+Die Schichten werden jeweils mit ; getrennt. Dabei ist es wichtig, dass auch nach  der letzen Schicht ein ; kommt, um Fehler zu vermeiden.
 
 *Beispiel für data/bereitschaftsplanUngeradeWoche.csv*
 ```csv
-0;Montag;Dienstag;Mittwoch;Donnerstag;Freitag
-1. Stunde;Maxi:Johnny;Franzi;Rudi;Leni;Uli
+0;Montag;Dienstag;Mittwoch;Donnerstag;Freitag;
+1. Stunde;Maxi:Johnny;Franzi;Rudi;Leni;Uli;
 2. Stunde;...
 ```
