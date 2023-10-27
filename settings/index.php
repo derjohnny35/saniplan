@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'verantwortliche' => explode(',', $_POST['verantwortliche']),
         'reportingLevel' => $_POST['reportingLevel'],
         'stand' => $_POST['stand'],
+        'uhr' => $_POST['uhr'],
     ];
 
     // JSON-Daten in eine Zeichenkette konvertieren
@@ -46,7 +47,7 @@ $json_data = json_decode($json_data, true);
 
         .form-container {
             display: grid;
-            grid-template-columns: auto 250px auto;
+            grid-template-columns: auto auto auto;
             justify-content: left;
             gap: 20px;
         }
@@ -82,6 +83,13 @@ $json_data = json_decode($json_data, true);
         <label for="reportingLevel">Reporting Level (0 = keine, 1 = nur Errors, 2 = Warnings und Errors)</label>
         <input type="text" name="reportingLevel" id="reportingLevel"
             value="<?php echo $json_data['reportingLevel']; ?>">
+        <br>
+
+        <label for="uhr">Anzeigeeinstellungen Uhr</label>
+        <select id="uhr" name="uhr">
+            <option value="1" <?php if ($json_data['uhr'] == 1) echo "selected"; ?>>Uhr groß oben in der Mitte anzeigen</option>
+            <option value="2" <?php if ($json_data['uhr'] == 2) echo "selected"; ?>>Uhr für debugging anzeigen (Reporting Level 2)</option>
+        </select>
         <br>
 
         <label for="stand">Stand des Bereitschaftsplans</label>

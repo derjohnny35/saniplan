@@ -33,8 +33,8 @@ include("person.php");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    //$time = "08:34:45";
-    //$day = 1;
+    //$time = "09:34:45";
+    //$day = 5;
     
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
@@ -67,16 +67,20 @@ include("person.php");
         $bereitschaftsplan = fopen('data/bereitschaftsplanUngeradeWoche.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWoche.csv!<br><br>" . verantwortliche($config));
         $bereitschaftsplanm = fopen('data/bereitschaftsplanUngeradeWocheMusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplanUngeradeWocheMusikschule.csv!<br><br>" . verantwortliche($config));
     }
-    echo "<div class='clock'>" . date("d.m.y") . "&emsp;<span id='time'>" . date("G:i:s") . "</span></div>";
+    if ($config->config["uhr"] == 1) {
+        echo "<div class='clock'>" . date("d.m.y") . "&emsp;<span id='time'>" . date("G:i:s") . "</span></div>";
+    } else if ($config->config["uhr"] == 2 && $config->config["reportingLevel"] == 2) {
+        echo "<div class='clock'>" . date("d.m.y") . "&emsp;<span id='time'>" . date("G:i:s") . "</span></div>";
+    }
 
     switch ($shiftnr) {
         case 0:
-            echo "Die erste Schicht hat noch nicht begonnen. Möglicherweise ist eine/r der folgenden SchülerInnen schon erreichbar:<br><br>";
+            echo "<div class=\"center\">Die erste Schicht hat noch nicht begonnen. Möglicherweise ist eine/r der folgenden SchülerInnen schon erreichbar:</div><br>";
             echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
             endTable($personalAll, $config);
             break;
         case 10:
-            echo "Die letzte Schicht ist bereits vorbei. Möglicherweise ist eine/r der folgenden SchülerInnen noch erreichbar:<br><br>";
+            echo "<div class=\"center\">Die letzte Schicht ist bereits vorbei. Möglicherweise ist eine/r der folgenden SchülerInnen noch erreichbar:</div><br>";
             echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
             endTable($personalAll, $config);
             break;
@@ -151,14 +155,16 @@ include("person.php");
 
     function verantwortliche($config)
     {
-        $temp = 0;
-        $result = $config->config["verantwortliche"][0];
-        for ($i = 1; $i < sizeof($config->config["verantwortliche"]) - 1; $i++) {
-            $result = $result . ", " . $config->config["verantwortliche"][$i];
-            $temp = $i;
+        $names = $config->config["verantwortliche"];
+        if (count($names) == 1) {
+            return $names[0] . ' kontaktieren';
+        } elseif (count($names) == 2) {
+            return $names[0] . ' oder ' . $names[1] . ' kontaktieren';
+        } elseif (count($names) > 2) {
+            $last = array_pop($names);
+            $namesString = implode(', ', $names) . ' oder ' . $last;
+            return $namesString . ' kontaktieren';
         }
-        $result = $result . " oder " . $config->config["verantwortliche"][$temp + 1] . " kontaktieren";
-        return $result;
     }
     ?>
     <br>
@@ -166,7 +172,7 @@ include("person.php");
         <div class='left'>Stand des Bereitschaftsplans:
             <?php echo $config->config["stand"]; ?>
         </div>
-        <div>Saniplan Version 1.5</div>
+        <div>Saniplan Version 1.6</div>
         <div class='right'>©Jonathan Hostadt 2023</div>
         <script>console.log("Fakt: Der Informatik-LK 2022-24 war mit Abstand der coolste");</script>
     </div>
