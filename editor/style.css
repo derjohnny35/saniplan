@@ -1,0 +1,84 @@
+:root {
+    --colorSecondary: #e0e0e0;
+}
+
+body {
+    font-size: 75%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    align-content: center;
+}
+
+.fullContent {
+    display: flex;
+    position: relative;
+}
+
+.draggable {
+    cursor: grab;
+}
+
+.stundenraster .draggable {
+    cursor: crosshair;
+}
+
+.stundenraster {
+    height: 90vh;
+    overflow: scroll;
+    display: flex;
+    width: 75%;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.personalListe {
+    height: 90vh;
+    overflow: scroll;
+    font-size: 140%;
+    flex: 1;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    border: 1px solid black;
+    padding: 3px;
+    margin-bottom: 2px;
+    list-style-type: none;
+}
+
+table {
+    width: 95%;
+    font-size: 130%;
+    text-align: center;
+    border-style: none;
+}
+
+th {
+    width: 1em;
+    border-style: none;
+}
+
+td {
+    width: 1em;
+    height: 6em;
+    border-style: none;
+}
+
+tr:nth-child(even) {
+    background-color: var(--colorSecondary);
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--colorSecondary);
+    font-size: 100%;
+    display: flex;
+    justify-content: space-between;
+}
