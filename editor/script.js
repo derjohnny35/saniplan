@@ -8,14 +8,31 @@ function drag(event) {
 
 function drop(event) {
     event.preventDefault();
+
     var data = event.dataTransfer.getData("text");
     var source = document.getElementById(data);
     var clone = source.cloneNode(true);
-    clone.id = "clone" + Math.random();
+
+    if (source.classList.contains('dropped')) {
+        source.remove();
+    }
+
+    clone.id = source.id + " clone" + Math.random();
     clone.classList.add("dropped");
-    clone.draggable = false;
+    clone.draggable = true;
     clone.onclick = function () {
         this.remove();
     };
     event.target.appendChild(clone);
 }
+
+function cancel() {
+    window.location.href = "../";
+}
+
+window.addEventListener('beforeunload', function (e) {
+    if (document.getElementById('unsavedData').innerHTML == "1") {
+        e.returnValue = "Sie haben noch ungespeicherte Daten!";
+        return "Sie haben noch ungespeicherte Daten!";
+    }
+});

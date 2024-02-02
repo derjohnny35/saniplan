@@ -87,8 +87,12 @@ $json_data = json_decode($json_data, true);
 
         <label for="uhr">Anzeigeeinstellungen Uhr</label>
         <select id="uhr" name="uhr">
-            <option value="1" <?php if ($json_data['uhr'] == 1) echo "selected"; ?>>Uhr groß oben in der Mitte anzeigen</option>
-            <option value="2" <?php if ($json_data['uhr'] == 2) echo "selected"; ?>>Uhr für debugging anzeigen (Reporting Level 2)</option>
+            <option value="1" <?php if ($json_data['uhr'] == 1)
+                echo "selected"; ?>>Uhr groß oben in der Mitte anzeigen
+            </option>
+            <option value="2" <?php if ($json_data['uhr'] == 2)
+                echo "selected"; ?>>Uhr für debugging anzeigen (Reporting
+                Level 2)</option>
         </select>
         <br>
 

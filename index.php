@@ -18,6 +18,7 @@ include("person.php");
 <body>
     <div class="header">
         <div id="settings" class="left" onclick="link('settings')">Einstellungen</div>
+        <div id="settings" class="right" onclick="link('editor')">Bereitschaftsplan-Editor</div>
     </div>
     <?php
     $personalData = fopen('data/personalData.csv', "r") or die("Fehler beim öffnen von data/personalData.csv!<br><br>" . verantwortliche($config));
@@ -26,14 +27,16 @@ include("person.php");
 
     while (!feof($personalData)) {
         $temp = explode(";", fgets($personalData));
-        $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
+        if (count($temp) == 6) {
+            $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
+        }
     }
 
     $time = date("G:i:s");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    //$time = "09:34:45";
+    //$time = "07:54:45";
     //$day = 5;
     
     if (strtotime($time) < strtotime("07:45:00")) {
