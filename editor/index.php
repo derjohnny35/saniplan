@@ -67,8 +67,8 @@ if ($plan == 'hauptgebaeude') {
         <p><b>4. Gebäude wechseln:</b></p>
         <p>Klicke auf das Feld oben links in der Tabelle, um zwischen den beiden Gebäuden umzuschalten.</p>
 
-        <p><b>5. Plan herunterladen:</b></p>
-        <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen.</p>
+        <p><b>5. Plan speichern:</b></p>
+        <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen oder lege den Plan als neuen Bereitschaftsplan fest.</p>
 
         <button onclick="closePopup('popup')" class="btn" id="closePopup">Schließen</button>
         <p class="small">Entwickelt von Jonathan Hostadt 2024. Bei Fragen und Anregungen melde dich bei ihm.</p>

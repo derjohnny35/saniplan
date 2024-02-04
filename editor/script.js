@@ -28,11 +28,15 @@ function drop(event) {
     } else {
         event.target.appendChild(clone);
     }
-    setUnsavedData();
+    setUnsavedData(true);
 }
 
 function cancel() {
-    window.location.href = "../";
+    if (document.getElementById('unsavedData').innerHTML == "1") {
+        window.location.reload();
+    } else {
+        window.location.href = "../";
+    }
 }
 
 function changePlan(plan) {
@@ -79,7 +83,7 @@ function clearPlan() {
         }
         lis = document.getElementById("stundenraster").getElementsByTagName("li");
     }
-    setUnsavedData(false);
+    setUnsavedData(true);
 }
 
 function setUnsavedData(state) {
