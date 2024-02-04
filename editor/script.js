@@ -56,7 +56,7 @@ function save() {
     if (document.getElementById("plan").innerHTML == 'LGÖ') {
         downloadLink.download = "bereitschaftsplan.csv";
     } else {
-        downloadLink.download = "bereitschaftsplanmusikschule.csv";
+        downloadLink.download = "bereitschaftsplanMusikschule.csv";
     }
     document.body.appendChild(downloadLink);
     downloadLink.click();
@@ -103,7 +103,7 @@ function setNewPlan() {
     if (document.getElementById("plan").innerHTML == 'LGÖ') {
         blobfile = new File([blob], 'bereitschaftsplan.csv');
     } else {
-        blobfile = new File([blob], 'bereitschaftsplanmusikschule.csv');
+        blobfile = new File([blob], 'bereitschaftsplanMusikschule.csv');
     }
     formData.append('datei', blobfile);
     let xhr = new XMLHttpRequest();
