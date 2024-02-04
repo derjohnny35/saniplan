@@ -30,7 +30,7 @@ $bereitschaftsplan = '';
 if ($plan == 'hauptgebaeude') {
     $bereitschaftsplan = fopen('../data/bereitschaftsplan.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
 } else {
-    $bereitschaftsplan = fopen('../data/bereitschaftsplanmusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
+    $bereitschaftsplan = fopen('../data/bereitschaftsplanMusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
 }
 ?>
 <html>
