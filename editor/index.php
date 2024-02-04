@@ -1,4 +1,16 @@
 <?php
+$plan = '';
+if (isset($_GET['plan'])) {
+    if ($_GET['plan'] == 'musikschule') {
+        $plan = 'musikschule';
+    } else if ($_GET['plan'] == 'hauptgebaeude') {
+        $plan = 'hauptgebaeude';
+    } else {
+        header("Location: ./?plan=hauptgebaeude");
+    }
+} else {
+    header("Location: ./?plan=hauptgebaeude");
+}
 include("../config.php");
 $config = new Config();
 error_reporting($config->config["reportingLevel"]);
@@ -9,12 +21,17 @@ $filesize = count(file("../data/personalData.csv"));
 $personalAll = [];
 
 while (!feof($personalData)) {
-    $temp = explode(";", fgets($personalData));
+    $temp = explode(";", str_replace(" ", "", fgets($personalData)));
     if (count($temp) == 6) {
         $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
     }
 }
-$bereitschaftsplan = fopen('../data/bereitschaftsplan.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
+$bereitschaftsplan = '';
+if ($plan == 'hauptgebaeude') {
+    $bereitschaftsplan = fopen('../data/bereitschaftsplan.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
+} else {
+    $bereitschaftsplan = fopen('../data/bereitschaftsplanmusikschule.csv', "r") or die("Fehler beim öffnen von data/bereitschaftsplan.csv!<br><br>" . verantwortliche($config));
+}
 ?>
 <html>
 
@@ -28,17 +45,22 @@ $bereitschaftsplan = fopen('../data/bereitschaftsplan.csv', "r") or die("Fehler 
 
 <body>
     <div class="header">
-        <div><button id="btnsave">Speichern</button></div>
+        <div><button id="btnsave" onclick="save()">Download</button></div>
         <div>
             <h1>Bereitschaftsplan Editor</h1>
         </div>
-        <div><button id="btncancel" onclick="cancel()">Abbrechen</button></div>
+        <div><button id="btncancel" onclick="cancel()">Zurück</button></div>
     </div>
     <div class="fullContent">
         <div class="stundenraster">
-            <table>
+            <table id="stundenraster">
                 <tr>
-                    <?php echo "<th>LGÖ</th>"; ?>
+                    <?php
+                    if ($plan == 'hauptgebaeude') {
+                        echo "<th id=\"plan\" onclick=\"changePlan('musikschule')\">LGÖ</th>";
+                    } else {
+                        echo "<th id=\"plan\" onclick=\"changePlan('hauptgebaeude')\">Musikschule</th>";
+                    } ?>
                     <th>Montag</th>
                     <th>Dienstag</th>
                     <th>Mittwoch</th>
@@ -47,36 +69,40 @@ $bereitschaftsplan = fopen('../data/bereitschaftsplan.csv', "r") or die("Fehler 
                 </tr>
                 <?php
                 $shift = fgets($bereitschaftsplan);
-                for ($i = 0; $i < 7; $i++) {
+                for ($i = 0; $i < 9; $i++) {
                     $shift = fgets($bereitschaftsplan);
-                    echo "<tr>";
-                    for ($j = 0; $j < 6; $j++) {
-                        if ($j == 0) {
-                            switch ($i) {
-                                case 2:
+                    if ($i != 3 && $i != 7) {
+                        echo "<tr>";
+                        for ($j = 0; $j < 6; $j++) {
+                            if ($j == 0) {
+                                if ($i == 2) {
                                     echo "<td class=\"first\">" . $i + 1 . ". Stunde<br>+ Pause";
-                                    break;
-
-                                case 5:
-                                    echo "<td class=\"first\">Pause +<br>" . $i + 1 . ". Stunde";
-                                    break;
-
-                                default:
+                                } else if ($i == 6) {
+                                    echo "<td class=\"first\">Pause +<br>" . $i . ". Stunde";
+                                } else if ($i > 6) {
+                                    echo "<td class=\"first\">" . $i - 1 . ". Stunde";
+                                } else if ($i > 2) {
+                                    echo "<td class=\"first\">" . $i . ". Stunde";
+                                } else {
                                     echo "<td class=\"first\">" . $i + 1 . ". Stunde";
-                                    break;
+                                }
+                            } else {
+                                $shiftPersonal = explode(":", explode(";", $shift)[$j]);
+                                echo "<td ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
+                                foreach ($shiftPersonal as $key => $value) {
+                                    if ($value == "") {
+                                    } else {
+                                        $value = getPersonId($personalAll, $value);
+                                        if ($value != 0) {
+                                            echo "<li id=\"" . $value . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"this.remove()\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
+                                        }
+                                    }
+                                }
+                                echo "</td>";
                             }
-                        } else {
-                            $shiftPersonal = explode(":", explode(";", $shift)[$j]);
-                            //echo "<td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->vorname . " " . $personalAll[getPersonId($personalAll, $shift[$i])]->name . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->klasse . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->handynummer . "</td>";
-                            echo "<td ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
-                            foreach ($shiftPersonal as $key => $value) {
-                                $value = getPersonId($personalAll, $value);
-                                echo "<li id=\"" . $value . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"this.remove()\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
-                            }
-                            echo "</td>";
                         }
+                        echo "</tr>";
                     }
-                    echo "</tr>";
                 }
                 ?>
             </table>

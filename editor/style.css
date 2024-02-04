@@ -4,6 +4,7 @@
 }
 
 body {
+    overflow: hidden;
     font-size: 75%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
@@ -16,7 +17,7 @@ body {
 }
 
 .draggable {
-    cursor: grab;
+    cursor: move;
 }
 
 .stundenraster {
@@ -40,9 +41,9 @@ ul {
 }
 
 li {
-    border: 1px dotted black;
+    border: 1px ridge gray;
     margin: 4px;
-    background-color: rgb(255, 219, 219);
+    background-color: rgb(195, 236, 253);
     padding: 3px;
     margin-bottom: 2px;
     list-style-type: none;
@@ -54,6 +55,11 @@ table {
     text-align: center;
     border-collapse: collapse;
     border: 2px black;
+}
+
+#plan:hover {
+    cursor: pointer;
+    background-color: #c5c5c5;
 }
 
 th {
@@ -70,6 +76,7 @@ td {
 
 td.first {
     width: 6em;
+    vertical-align: middle;
 }
 
 tr:nth-child(even) {
@@ -108,7 +115,8 @@ tr:nth-child(even) {
     padding-right: 5px;
 }
 
-#btnsave, #btncancel{
+#btnsave,
+#btncancel {
     height: 70%;
     translate: 0px 15px;
     font-size: 150%;
@@ -118,7 +126,8 @@ tr:nth-child(even) {
     border: solid black 1px;
 }
 
-#btnsave:hover, #btncancel:hover {
+#btnsave:hover,
+#btncancel:hover {
     cursor: pointer;
     background-color: var(--colorSecondaryDark);
 }
