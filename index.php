@@ -36,9 +36,9 @@ include("person.php");
     $day = date("N");
     $week = date("W");
     $shiftnr = null;
-    //$time = "07:54:45";
+    //$time = "10:54:45";
     //$day = 5;
-    
+
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
     } else if (strtotime($time) >= strtotime("07:45:00") && strtotime($time) < strtotime("08:40:00")) {
@@ -95,9 +95,14 @@ include("person.php");
             }
             $shift = explode(":", explode(";", $shift)[$day]);
             for ($i = 0; $i < count($shift); $i++) {
-                echo "<tr>";
-                echo "<td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->vorname . " " . $personalAll[getPersonId($personalAll, $shift[$i])]->name . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->klasse . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->handynummer . "</td>";
-                echo "</tr>";
+                $personalID = getPersonId($personalAll, $shift[$i]);
+                if ($personalID != 0) {
+                    echo "<tr>";
+                    echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
+                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='3'>Für die aktuelle Schicht ist niemand verfügbar!<td></tr>";
+                }
             }
 
             echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr><tr><th colspan='3' id='grey'>Musikschule</th></tr>";
@@ -107,12 +112,13 @@ include("person.php");
             }
             $shift = explode(":", explode(";", $shift)[$day]);
             for ($i = 0; $i < count($shift); $i++) {
-                if (!$personalAll[(int) $shift[$i]]->vorname == 0) {
+                $personalID = getPersonId($personalAll, $shift[$i]);
+                if ($personalID != 0) {
                     echo "<tr>";
-                    echo "<td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->vorname . " " . $personalAll[getPersonId($personalAll, $shift[$i])]->name . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->klasse . "</td><td>" . $personalAll[getPersonId($personalAll, $shift[$i])]->handynummer . "</td>";
+                    echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
                     echo "</tr>";
                 } else {
-                    echo "<tr><td colspan='3'>Es ist für die aktuelle Schicht niemand verfügbar!<td></tr>";
+                    echo "<tr><td colspan='3'>Für die aktuelle Schicht ist niemand verfügbar!<td></tr>";
                 }
             }
             echo "<tr id='placeholder'><td colspan='3' id='hr'><hr></td></tr>
