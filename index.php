@@ -1,4 +1,11 @@
 <?php
+if (isset($_FILES['datei'])) {
+    $uploadDir = 'data/';
+    $uploadFile = $uploadDir . basename($_FILES['datei']['name']);
+    unlink($uploadFile);
+    move_uploaded_file($_FILES['datei']['tmp_name'], $uploadFile);
+    exit();
+}
 include("config.php");
 $config = new Config();
 error_reporting($config->config["reportingLevel"]);
@@ -37,7 +44,7 @@ include("person.php");
     $week = date("W");
     $shiftnr = null;
     //$time = "10:54:45";
-    //$day = 5;
+    //$day = 1;
 
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
@@ -95,11 +102,13 @@ include("person.php");
             }
             $shift = explode(":", explode(";", $shift)[$day]);
             for ($i = 0; $i < count($shift); $i++) {
-                $personalID = getPersonId($personalAll, $shift[$i]);
-                if ($personalID != 0) {
-                    echo "<tr>";
-                    echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
-                    echo "</tr>";
+                if ($shift[$i] != '') {
+                    $personalID = getPersonId($personalAll, $shift[$i]);
+                    if ($personalID != 0) {
+                        echo "<tr>";
+                        echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
+                        echo "</tr>";
+                    }
                 } else {
                     echo "<tr><td colspan='3'>Für die aktuelle Schicht ist niemand verfügbar!<td></tr>";
                 }
@@ -112,11 +121,13 @@ include("person.php");
             }
             $shift = explode(":", explode(";", $shift)[$day]);
             for ($i = 0; $i < count($shift); $i++) {
-                $personalID = getPersonId($personalAll, $shift[$i]);
-                if ($personalID != 0) {
-                    echo "<tr>";
-                    echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
-                    echo "</tr>";
+                if ($shift[$i] != '') {
+                    $personalID = getPersonId($personalAll, $shift[$i]);
+                    if ($personalID != 0) {
+                        echo "<tr>";
+                        echo "<td>" . $personalAll[$personalID]->vorname . " " . $personalAll[$personalID]->name . "</td><td>" . $personalAll[$personalID]->klasse . "</td><td>" . $personalAll[$personalID]->handynummer . "</td>";
+                        echo "</tr>";
+                    }
                 } else {
                     echo "<tr><td colspan='3'>Für die aktuelle Schicht ist niemand verfügbar!<td></tr>";
                 }

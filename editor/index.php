@@ -44,12 +44,48 @@ if ($plan == 'hauptgebaeude') {
 </head>
 
 <body>
+    <div id="popup">
+        <h2>Bereitschaftsplan-Editor Bedienungsanleitung</h2>
+        <p>
+            Dies ist ein eigens entwickelter Editor für den Bereitschaftsplan.
+            In der Personalliste rechts sind alle Personen aus der Datei "personalData.csv" aufgelistet.
+            Geladen wird immer der aktuelle Bereitschaftsplan, wie er in der Datei
+            "bereitschaftsplan.csv"/"bereitschaftsplanmusikschule.csv" steht.<br>
+            Der Editor bietet folgende Funktionen:
+        <p>
+
+        <p><b>1. Personen hinzufügen:</b></p>
+        <p>Ziehe eine Person per Drag-n-Drop aus der Liste und platziere sie im Stundenplanraster.</p>
+
+        <p><b>2. Personen verschieben:</b></p>
+        <p>Klicke und halte die Maustaste über einer Person, ziehe sie an die gewünschte Stelle und lasse die Maustaste
+            los.</p>
+
+        <p><b>3. Person entfernen:</b></p>
+        <p>Klicke auf eine Person im Stundenplan, um sie zu entfernen.</p>
+
+        <p><b>4. Gebäude wechseln:</b></p>
+        <p>Klicke auf das Feld oben links in der Tabelle, um zwischen den beiden Gebäuden umzuschalten.</p>
+
+        <p><b>5. Plan herunterladen:</b></p>
+        <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen.</p>
+
+        <button onclick="closePopup('popup')" class="btn" id="closePopup">Schließen</button>
+        <p class="small">Entwickelt von Jonathan Hostadt 2024. Bei Fragen und Anregungen melde dich bei ihm.</p>
+    </div>
+    <div id="speichernpopup">
+        <button onclick="save()" class="btn" id="download">Download</button><br><br>
+        <button onclick="setNewPlan()" class="btn" id="closePopup">Als neuen Bereitschaftsplan einstellen</button><br><br>
+        <button onclick="closePopup('speichernpopup')" class="btn" id="closePopup">Abbrechen</button><br><br>
+    </div>
+    <div id="overlay"></div>
     <div class="header">
-        <div><button id="btnsave" onclick="save()">Download</button></div>
+        <div><button id="btnsave" class="btn" onclick="showPopup('speichernpopup')">Speichern</button></div>
         <div>
             <h1>Bereitschaftsplan Editor</h1>
         </div>
-        <div><button id="btncancel" onclick="cancel()">Zurück</button></div>
+        <div><button id="btnclear" class="btn" onclick="clearPlan()">Clear</button> <button id="btncancel" class="btn"
+                onclick="cancel()">Zurück</button></div>
     </div>
     <div class="fullContent">
         <div class="stundenraster">
@@ -90,11 +126,10 @@ if ($plan == 'hauptgebaeude') {
                                 $shiftPersonal = explode(":", explode(";", $shift)[$j]);
                                 echo "<td ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">";
                                 foreach ($shiftPersonal as $key => $value) {
-                                    if ($value == "") {
-                                    } else {
+                                    if ($value != "") {
                                         $value = getPersonId($personalAll, $value);
                                         if ($value != 0) {
-                                            echo "<li id=\"" . $value . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"this.remove()\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
+                                            echo "<li id=\"" . $value . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"remove(this)\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
                                         }
                                     }
                                 }
@@ -121,7 +156,7 @@ if ($plan == 'hauptgebaeude') {
         </div>
     </div>
     <div class='footer'>
-        <div class='left'></div>
+        <div class='left' onclick="showPopup('popup')">Bedienungsanleitung</div>
         <div>Saniplan Editor Version 0.9</div>
         <div class='right'>©Jonathan Hostadt 2024</div>
         <script>console.log("Fakt: Der Informatik-LK 2022-24 war mit Abstand der coolste");</script>

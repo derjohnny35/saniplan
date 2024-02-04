@@ -28,8 +28,7 @@ function drop(event) {
     } else {
         event.target.appendChild(clone);
     }
-    document.getElementById('unsavedData').innerHTML = 1;
-    document.getElementById('btncancel').innerHTML = "Abbrechen";
+    setUnsavedData();
 }
 
 function cancel() {
@@ -40,7 +39,77 @@ function changePlan(plan) {
     window.location.href = "./?plan=" + plan;
 }
 
+function remove(element) {
+    element.remove();
+    setUnsavedData();
+}
+
 function save() {
+    let blob = createBlob();
+    const downloadLink = document.createElement("a");
+
+    downloadLink.href = URL.createObjectURL(blob);
+    if (document.getElementById("plan").innerHTML == 'LGÖ') {
+        downloadLink.download = "bereitschaftsplan.csv";
+    } else {
+        downloadLink.download = "bereitschaftsplanmusikschule.csv";
+    }
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    closePopup('speichernpopup');
+    setUnsavedData(false);
+}
+
+function showPopup(id) {
+    document.getElementById(id).style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+function closePopup(id) {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function clearPlan() {
+    var lis = document.getElementById("stundenraster").getElementsByTagName("li");
+    while (lis.length > 0) {
+        for (let i = 0; i < lis.length; i++) {
+            lis[i].remove();
+        }
+        lis = document.getElementById("stundenraster").getElementsByTagName("li");
+    }
+    setUnsavedData(false);
+}
+
+function setUnsavedData(state) {
+    if (state) {
+        document.getElementById('unsavedData').innerHTML = 1;
+        document.getElementById('btncancel').innerHTML = "Abbrechen";
+    } else {
+        document.getElementById('unsavedData').innerHTML = 0;
+        document.getElementById('btncancel').innerHTML = "Zurück";
+    }
+}
+
+function setNewPlan() {
+    let blob = createBlob();
+    let formData = new FormData();
+    let blobfile;
+    if (document.getElementById("plan").innerHTML == 'LGÖ') {
+        blobfile = new File([blob], 'bereitschaftsplan.csv');
+    } else {
+        blobfile = new File([blob], 'bereitschaftsplanmusikschule.csv');
+    }
+    formData.append('datei', blobfile);
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '../', true);
+    xhr.send(formData);
+    setUnsavedData(false);
+    closePopup('speichernpopup');
+}
+
+function createBlob() {
     let data = document.getElementById("plan").innerHTML;
     data += ";Montag;Dienstag;Mittwoch;Donnerstag;Freitag;\n";
     var table = document.getElementById("stundenraster");
@@ -84,15 +153,7 @@ function save() {
     }
 
     let blob = new Blob([data], { type: "text:csv;charset=utf-8;" });
-    const downloadLink = document.createElement("a");
-
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = "stundenplan.csv";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    document.getElementById('unsavedData').innerHTML = 0;
-    document.getElementById('btncancel').innerHTML = "Zurück";
+    return blob;
 }
 
 window.addEventListener('beforeunload', function (e) {
