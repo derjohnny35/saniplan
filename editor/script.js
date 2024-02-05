@@ -45,7 +45,7 @@ function changePlan(plan) {
 
 function remove(element) {
     element.remove();
-    setUnsavedData();
+    setUnsavedData(true);
 }
 
 function save() {
