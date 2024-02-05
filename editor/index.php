@@ -68,14 +68,16 @@ if ($plan == 'hauptgebaeude') {
         <p>Klicke auf das Feld oben links in der Tabelle, um zwischen den beiden Gebäuden umzuschalten.</p>
 
         <p><b>5. Plan speichern:</b></p>
-        <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen oder lege den Plan als neuen Bereitschaftsplan fest.</p>
+        <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen oder lege den Plan als
+            neuen Bereitschaftsplan fest.</p>
 
         <button onclick="closePopup('popup')" class="btn" id="closePopup">Schließen</button>
         <p class="small">Entwickelt von Jonathan Hostadt 2024. Bei Fragen und Anregungen melde dich bei ihm.</p>
     </div>
     <div id="speichernpopup">
         <button onclick="save()" class="btn" id="download">Download</button><br><br>
-        <button onclick="setNewPlan()" class="btn" id="closePopup">Als neuen Bereitschaftsplan einstellen</button><br><br>
+        <button onclick="setNewPlan()" class="btn" id="closePopup">Als neuen Bereitschaftsplan
+            einstellen</button><br><br>
         <button onclick="closePopup('speichernpopup')" class="btn" id="closePopup">Abbrechen</button><br><br>
     </div>
     <div id="overlay"></div>
@@ -106,21 +108,22 @@ if ($plan == 'hauptgebaeude') {
                 <?php
                 $shift = fgets($bereitschaftsplan);
                 for ($i = 0; $i < 9; $i++) {
+                    $i = (int) $i;
                     $shift = fgets($bereitschaftsplan);
                     if ($i != 3 && $i != 7) {
                         echo "<tr>";
                         for ($j = 0; $j < 6; $j++) {
                             if ($j == 0) {
                                 if ($i == 2) {
-                                    echo "<td class=\"first\">" . $i + 1 . ". Stunde<br>+ Pause";
+                                    echo "<td class=\"first\">" . ($i + 1) . ". Stunde<br>+ Pause";
                                 } else if ($i == 6) {
                                     echo "<td class=\"first\">Pause +<br>" . $i . ". Stunde";
                                 } else if ($i > 6) {
-                                    echo "<td class=\"first\">" . $i - 1 . ". Stunde";
+                                    echo "<td class=\"first\">" . ($i - 1) . ". Stunde";
                                 } else if ($i > 2) {
                                     echo "<td class=\"first\">" . $i . ". Stunde";
                                 } else {
-                                    echo "<td class=\"first\">" . $i + 1 . ". Stunde";
+                                    echo "<td class=\"first\">" . ($i + 1) . ". Stunde";
                                 }
                             } else {
                                 $shiftPersonal = explode(":", explode(";", $shift)[$j]);
@@ -184,10 +187,5 @@ function getPersonId($personalAll, $value)
         }
     }
     return 0;
-}
-
-function createLiClone($personalAll, $personalID)
-{
-
 }
 ?>
