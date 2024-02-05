@@ -80,7 +80,7 @@ if ($plan == 'hauptgebaeude') {
             einstellen</button><br><br>
         <button onclick="closePopup('speichernpopup')" class="btn" id="closePopup">Abbrechen</button><br><br>
     </div>
-    <div id="overlay"></div>
+    <div id="overlay" onclick="closePopup('popup')"></div>
     <div class="header">
         <div><button id="btnsave" class="btn" onclick="showPopup('speichernpopup')">Speichern</button></div>
         <div>
