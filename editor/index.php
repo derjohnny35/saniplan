@@ -160,7 +160,7 @@ if ($plan == 'hauptgebaeude') {
     </div>
     <div class='footer'>
         <div class='left' onclick="showPopup('popup')">Bedienungsanleitung</div>
-        <div>Saniplan Editor Version 0.9</div>
+        <div>Saniplan Editor Version 1.0</div>
         <div class='right'>©Jonathan Hostadt 2024</div>
         <script>console.log("Fakt: Der Informatik-LK 2022-24 war mit Abstand der coolste");</script>
     </div>
