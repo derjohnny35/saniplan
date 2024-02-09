@@ -15,7 +15,7 @@ include("person.php");
 <html>
 
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Bereitschaftsplan Schulsanis</title>
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
@@ -45,7 +45,7 @@ include("person.php");
     $shiftnr = null;
     //$time = "10:54:45";
     //$day = 1;
-
+    
     if (strtotime($time) < strtotime("07:45:00")) {
         $shiftnr = 0;
     } else if (strtotime($time) >= strtotime("07:45:00") && strtotime($time) < strtotime("08:40:00")) {
