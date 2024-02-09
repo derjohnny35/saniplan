@@ -21,7 +21,7 @@ $filesize = count(file("../data/personalData.csv"));
 $personalAll = [];
 
 while (!feof($personalData)) {
-    $temp = explode(";", str_replace(" ", "", fgets($personalData)));
+    $temp = explode(";", str_replace(" ", "", htmlentities(fgets($personalData))));
     if (count($temp) == 6) {
         $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
     }
@@ -36,7 +36,7 @@ if ($plan == 'hauptgebaeude') {
 <html>
 
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Bereitschaftsplan Editor</title>
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
