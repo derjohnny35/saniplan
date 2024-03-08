@@ -37,7 +37,7 @@ if ($plan == 'hauptgebaeude') {
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Bereitschaftsplan Editor</title>
+    <title>Bereitschaftsplan-Editor</title>
     <link rel="icon" href="https://www.lgoe.de/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" type="text/javascript"></script>
@@ -84,7 +84,7 @@ if ($plan == 'hauptgebaeude') {
     <div class="header">
         <div><button id="btnsave" class="btn" onclick="showPopup('speichernpopup')">Speichern</button></div>
         <div>
-            <h1>Bereitschaftsplan Editor</h1>
+            <h1>Bereitschaftsplan-Editor</h1>
         </div>
         <div><button id="btnclear" class="btn" onclick="clearPlan()">Clear</button> <button id="btncancel" class="btn"
                 onclick="cancel()">Zurück</button></div>
