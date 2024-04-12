@@ -44,8 +44,11 @@ function changePlan(plan) {
 }
 
 function remove(element) {
-    element.remove();
-    setUnsavedData(true);
+    var antwort = window.confirm("Möchten Sie diese Person wirklich löschen?");
+    if (antwort) {
+        element.remove();
+        setUnsavedData(true);
+    }
 }
 
 function save() {
