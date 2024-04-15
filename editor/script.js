@@ -66,6 +66,7 @@ function save() {
     document.body.removeChild(downloadLink);
     closePopup('speichernpopup');
     setUnsavedData(false);
+    fetch("../Config.php?update=true&key=stand&value="+aktuellesDatum());
 }
 
 function showPopup(id) {
@@ -114,6 +115,8 @@ function setNewPlan() {
     xhr.send(formData);
     setUnsavedData(false);
     closePopup('speichernpopup');
+    fetch("../Config.php?update=true&key=stand&value="+aktuellesDatum());
+    alert("Der Bereitschaftsplan wurde geändert.")
 }
 
 function createBlob() {
@@ -161,6 +164,16 @@ function createBlob() {
 
     let blob = new Blob([data], { type: "text:csv;charset=utf-8;" });
     return blob;
+}
+
+function aktuellesDatum() {
+    const heute = new Date();
+
+    const tag = String(heute.getDate()).padStart(2, '0');
+    const monat = String(heute.getMonth() + 1).padStart(2, '0');
+    const jahr = heute.getFullYear();
+
+    return tag + '.' + monat + '.' + jahr;
 }
 
 window.addEventListener('beforeunload', function (e) {
