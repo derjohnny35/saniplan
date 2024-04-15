@@ -16,4 +16,12 @@ class Config
         file_put_contents($this->configPath, json_encode($this->config, JSON_PRETTY_PRINT));
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['update'])) {
+    $key = $_GET['key'];
+    $value = $_GET['value'];
+    $config = new Config();
+    $config->update($key, $value);
+    echo "{$key} wurde auf {$value} geändert.";
+}
 ?>
