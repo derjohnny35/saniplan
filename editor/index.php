@@ -21,9 +21,9 @@ $filesize = count(file("../data/personalData.csv"));
 $personalAll = [];
 
 while (!feof($personalData)) {
-    $temp = explode(";", str_replace(" ", "", htmlentities(fgets($personalData))));
+    $temp = explode(";", str_replace(" ", "", fgets($personalData)));
     if (count($temp) == 6) {
-        $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
+        $personalAll[] = new Person(trim($temp[0]), htmlentities(trim($temp[1])), htmlentities(trim($temp[2])), trim($temp[3]), trim($temp[4]), htmlentities(trim($temp[5])));
     }
 }
 $bereitschaftsplan = '';
