@@ -108,7 +108,6 @@ if ($plan == 'hauptgebaeude') {
                 <?php
                 $shift = fgets($bereitschaftsplan);
                 for ($i = 0; $i < 9; $i++) {
-                    $i = (int) $i;
                     $shift = fgets($bereitschaftsplan);
                     if ($i != 3 && $i != 7) {
                         echo "<tr>";

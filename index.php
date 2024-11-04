@@ -38,7 +38,7 @@ include("person.php");
             $personalAll[] = new Person(trim($temp[0]), trim($temp[1]), trim($temp[2]), trim($temp[3]), trim($temp[4]), trim($temp[5]));
         }
     }
-
+    date_default_timezone_set("Europe/Berlin");
     $time = date("G:i:s");
     $day = date("N");
     $week = date("W");

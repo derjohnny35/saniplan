@@ -17,11 +17,13 @@ function drop(event) {
         source.remove();
     }
 
-    clone.id = source.id + " clone" + Math.random();
+    if (!clone.id.includes("clone")) {
+        clone.id = source.id + " clone" + Math.floor(Math.random() * 10 ** 10);
+    }
     clone.classList.add("dropped");
     clone.draggable = true;
     clone.onclick = function () {
-        this.remove();
+        remove(clone);
     };
     if (event.target.classList.contains('dropped') && event.target.parentNode != null) {
         event.target.parentNode.appendChild(clone);
@@ -66,7 +68,7 @@ function save() {
     document.body.removeChild(downloadLink);
     closePopup('speichernpopup');
     setUnsavedData(false);
-    fetch("../Config.php?update=true&key=stand&value="+aktuellesDatum());
+    fetch("../Config.php?update=true&key=stand&value=" + aktuellesDatum());
 }
 
 function showPopup(id) {
@@ -115,8 +117,10 @@ function setNewPlan() {
     xhr.send(formData);
     setUnsavedData(false);
     closePopup('speichernpopup');
-    fetch("../Config.php?update=true&key=stand&value="+aktuellesDatum());
+    fetch("../Config.php?update=true&key=stand&value=" + aktuellesDatum());
     alert("Der Bereitschaftsplan wurde geändert.")
+    window.location.reload();
+
 }
 
 function createBlob() {
