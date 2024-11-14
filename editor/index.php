@@ -131,7 +131,7 @@ if ($plan == 'hauptgebaeude') {
                                     if ($value != "") {
                                         $value = getPersonId($personalAll, $value);
                                         if ($value != 0) {
-                                            echo "<li id=\"" . $value . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"remove(this)\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
+                                            echo "<li id=\"" . $personalAll[$value]->id . " clone" . rand() . "\" class=\"draggable dropped\" draggable=\"true\" ondragstart=\"drag(event)\" onclick=\"remove(this)\">" . $personalAll[$value]->vorname . " " . $personalAll[$value]->name . ", " . $personalAll[$value]->klasse . "</li>";
                                         }
                                     }
                                 }
