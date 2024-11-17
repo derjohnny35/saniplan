@@ -71,23 +71,26 @@ if ($plan == 'hauptgebaeude') {
         <p>Verwende den Button "Download", um den aktuellen Bereitschaftsplan herunterzuladen oder lege den Plan als
             neuen Bereitschaftsplan fest.</p>
 
-        <button onclick="closePopup('popup')" class="btn" id="closePopup">Schließen</button>
+        <button onclick="closePopup('popup')" class="btn">Schließen</button>
         <p class="small">Entwickelt von Jonathan Hostadt 2024. Bei Fragen und Anregungen melde dich bei ihm.</p>
     </div>
     <div id="speichernpopup">
-        <button onclick="save()" class="btn" id="download">Download</button><br><br>
-        <button onclick="setNewPlan()" class="btn" id="closePopup">Als neuen Bereitschaftsplan
+        <button onclick="save()" class="btn">Download</button><br><br>
+        <button onclick="setNewPlan()" class="btn">Als neuen Bereitschaftsplan
             einstellen</button><br><br>
-        <button onclick="closePopup('speichernpopup')" class="btn" id="closePopup">Abbrechen</button><br><br>
+        <button onclick="closePopup('speichernpopup')" class="btn">Abbrechen</button><br><br>
     </div>
-    <div id="overlay" onclick="closePopup('popup')"></div>
+    <div id="overlay" onclick="closePopup('')"></div>
     <div class="header">
         <div><button id="btnsave" class="btn" onclick="showPopup('speichernpopup')">Speichern</button></div>
         <div>
             <h1>Bereitschaftsplan-Editor</h1>
         </div>
-        <div><button id="btnclear" class="btn" onclick="clearPlan()">Clear</button> <button id="btncancel" class="btn"
-                onclick="cancel()">Zurück</button></div>
+        <div>
+            <button id="btnprint" class="btn" onclick="print()">Drucken</button>
+            <button id="btnclear" class="btn" onclick="clearPlan()">Clear</button>
+            <button id="btncancel" class="btn" onclick="cancel()">Zurück</button>
+        </div>
     </div>
     <div class="fullContent">
         <div class="stundenraster">

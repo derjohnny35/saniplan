@@ -73,11 +73,17 @@ function save() {
 
 function showPopup(id) {
     document.getElementById(id).style.display = 'block';
+    document.getElementById(id).classList.add('popup');
     document.getElementById('overlay').style.display = 'block';
 }
 
 function closePopup(id) {
-    document.getElementById(id).style.display = 'none';
+    if (id == '') {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('speichernpopup').style.display = 'none';
+    } else {
+        document.getElementById(id).style.display = 'none';
+    }
     document.getElementById('overlay').style.display = 'none';
 }
 
@@ -178,6 +184,10 @@ function aktuellesDatum() {
     const jahr = heute.getFullYear();
 
     return tag + '.' + monat + '.' + jahr;
+}
+
+function print() {
+    window.open('./print.php?plan='+document.getElementById("plan").innerHTML, '_blank').focus();
 }
 
 window.addEventListener('beforeunload', function (e) {
