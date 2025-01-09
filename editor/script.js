@@ -46,7 +46,7 @@ function changePlan(plan) {
 }
 
 function remove(element) {
-    var antwort = window.confirm("Möchten Sie diese Person wirklich löschen?");
+    var antwort = window.confirm("Möchten Sie diese Person aus dem Plan entfernen? (Stammdaten werden behalten)");
     if (antwort) {
         element.remove();
         setUnsavedData(true);
