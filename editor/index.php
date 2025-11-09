@@ -110,7 +110,7 @@ if ($plan == 'hauptgebaeude') {
                 </tr>
                 <?php
                 $shift = fgets($bereitschaftsplan);
-                for ($i = 0; $i < 9; $i++) {
+                for ($i = 0; $i < 12; $i++) {
                     $shift = fgets($bereitschaftsplan);
                     if ($i != 3 && $i != 7) {
                         echo "<tr>";
@@ -162,7 +162,7 @@ if ($plan == 'hauptgebaeude') {
     </div>
     <div class='footer'>
         <div class='left' onclick="showPopup('popup')">Bedienungsanleitung</div>
-        <div>Saniplan Editor Version 1.0</div>
+        <div>Saniplan Editor Version 1.1</div>
         <div class='right'>©Jonathan Hostadt 2024</div>
         <script>console.log("Fakt: Der Informatik-LK 2022-24 war mit Abstand der coolste");</script>
     </div>

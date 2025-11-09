@@ -66,8 +66,14 @@ include("person.php");
         $shiftnr = 8;
     } else if (strtotime($time) >= strtotime("13:15:00") && strtotime($time) < strtotime("14:00:00")) {
         $shiftnr = 9;
-    } else if (strtotime($time) >= strtotime("14:00:00")) {
+    } else if (strtotime($time) >= strtotime("14:00:00") && strtotime($time) < strtotime("14:45:00")) {
         $shiftnr = 10;
+    } else if (strtotime($time) >= strtotime("14:45:00") && strtotime($time) < strtotime("15:35:00")) {
+        $shiftnr = 11;
+    } else if (strtotime($time) >= strtotime("15:35:00") && strtotime($time) < strtotime("16:20:00")) {
+        $shiftnr = 12;
+    } else if (strtotime($time) >= strtotime("14:00:00")) {
+        $shiftnr = 13;
     }
 
     if ($week % 2 == 0 || ($config->config["useTwoWeekPlan"] == false)) {
@@ -89,7 +95,7 @@ include("person.php");
             echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
             endTable($personalAll, $config);
             break;
-        case 10:
+        case 13:
             echo "<div class=\"center\">Die letzte Schicht ist bereits vorbei. Möglicherweise ist eine/r der folgenden SchülerInnen noch erreichbar:</div><br>";
             echo "<table class='center' border='1'><tr><th>Name</th><th>Klasse</th><th>Telefonnummer</th></tr>";
             endTable($personalAll, $config);

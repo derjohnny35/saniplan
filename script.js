@@ -32,7 +32,7 @@ function aktualisiereUhr() {
 }
 
 function reloadOnShiftChange() {
-    const schichtbeginn = ["7:45:0", "8:40:0", "9:30:0", "10:15:0", "10:35:0", "11:25:0", "12:10:0", "12:25:0", "13:15:0", "14:0:0"];
+    const schichtbeginn = ["7:45:0", "8:40:0", "9:30:0", "10:15:0", "10:35:0", "11:25:0", "12:10:0", "12:25:0", "13:15:0", "14:0:0", "14:45:0", "15:35:0", "16:20:0"];
     let heute = new Date();
     let zeit = `${heute.getHours()}:${heute.getMinutes()}:${heute.getSeconds()}`;
     for (let i = 0; i < schichtbeginn.length; i++) {
