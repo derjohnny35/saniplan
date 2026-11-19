@@ -64,10 +64,12 @@ function seite_fuss($basis, $modul, $links = '')
     </footer>
     <?php if ($modul !== '') {
         // Import-Map mit Versionsparameter: Nach einem Update lädt der Browser garantiert die neuen Module.
+        // Relative Adressen in Import-Maps müssen mit ./ oder ../ beginnen.
         $v = '?v=' . rawurlencode(SANIPLAN_VERSION);
+        $praefix = $basis === '' ? './' : $basis;
         $karte = array('imports' => array(
-            'preact' => $basis . 'assets/vendor/preact-htm.module.js' . $v,
-            'saniplan/gemeinsam' => $basis . 'assets/js/gemeinsam.js' . $v,
+            'preact' => $praefix . 'assets/vendor/preact-htm.module.js' . $v,
+            'saniplan/gemeinsam' => $praefix . 'assets/js/gemeinsam.js' . $v,
         ));
         ?>
         <script type="importmap"><?php echo json_encode($karte, JSON_UNESCAPED_SLASHES); ?></script>
