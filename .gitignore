@@ -3,3 +3,7 @@ data/saniplan.sqlite
 data/saniplan.sqlite-*
 data/.lock
 data/archiv-v1/
+
+# Daten aus Version 1 (seit Release 2.0.1 nicht mehr im Repository)
+data/*.csv
+settings/config.json

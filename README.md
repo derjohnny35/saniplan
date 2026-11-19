@@ -2,7 +2,7 @@
 
 Der Saniplan™ zeigt im Sekretariat an, welche Schulsanitäterinnen und Schulsanitäter gerade Bereitschaft haben, und hilft dabei, den Bereitschaftsplan im Stundenraster des Leibniz-Gymnasiums zu verwalten. Es gibt zwei Gebäude: das Hauptgebäude (LGÖ) und die Musikschule.
 
-> **Version 2 ist in Arbeit** (Branch `v2`). Der Umsetzungsplan steht in [docs/v2-plan.md](docs/v2-plan.md).
+> **Version 2.** Wer noch Version 1 betreibt, folgt der Anleitung unter [Umstieg von Version 1](#umstieg-von-version-1). Hintergründe stehen in [docs/v2-plan.md](docs/v2-plan.md).
 
 ## Funktionen
 

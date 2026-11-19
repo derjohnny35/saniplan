@@ -217,7 +217,7 @@ Alle Schreibzugriffe validieren die Eingaben serverseitig und laufen in einer Tr
 7. ✅ Personen + Einstellungen
 8. ✅ Alte v1-Code-Dateien entfernt
 9. ✅ Tests in Docker (siehe unten)
-10. Merge nach `main` → **Release 2.0** → auf dem Pi `git pull` → Diagnoseseite prüfen → **Release 2.0.1**
+10. ✅ Release 2.0 auf Branch `v2`, Release 2.0.1 (Altdateien entfernt) auf `main`. Ablauf auf dem Pi: `git pull origin v2` → Diagnoseseite öffnen → `git pull origin main` (siehe README)
 
 ### Durchgeführte Tests (19.11.2026)
 
