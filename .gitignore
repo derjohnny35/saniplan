@@ -1,0 +1,5 @@
+# Saniplan v2: Laufzeitdaten (Datenbank, Sperrdatei, Archiv der v1-Dateien)
+data/saniplan.sqlite
+data/saniplan.sqlite-*
+data/.lock
+data/archiv-v1/
