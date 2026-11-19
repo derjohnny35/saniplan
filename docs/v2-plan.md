@@ -53,7 +53,7 @@ docs/                     Dieser Plan
 ## Datenmodell
 
 ```sql
-person        (id INTEGER PK, nachname, vorname, klasse, telefon, spitzname)
+person        (id INTEGER PK, nachname, vorname, klasse, telefon)   -- Spalte spitzname existiert noch, wird seit 2.0.2 nicht mehr genutzt
 schicht       (id INTEGER PK, position, bezeichnung, beginn 'HH:MM', ende 'HH:MM')
 einteilung    (gebaeude TEXT CHECK IN ('hauptgebaeude','musikschule'),
                wochentag INTEGER 1–5, schicht_id → schicht, person_id → person (ON DELETE CASCADE),
@@ -99,7 +99,7 @@ Beim ersten Request ohne Datenbank (unter Lock):
 3. Gibt es `data/bereitschaftsplan.csv` bzw. `data/bereitschaftsplanMusikschule.csv`, die Einteilungen importieren:
    - Es werden genau die Zeilen genommen, die auch der v1-Editor liest: Datenzeilen 1–12 ohne die 4. und 8.
    - Spalte 1–5 entspricht Montag bis Freitag.
-   - Einträge sind durch `:` getrennt und werden über die ID, den Spitznamen oder „Vorname Nachname“ einer Person zugeordnet.
+   - Einträge sind durch `:` getrennt und werden über die ID, den Spitznamen aus v1 oder „Vorname Nachname“ einer Person zugeordnet. Der Spitzname selbst wird seit 2.0.2 nicht mehr übernommen.
    - Fehlende Zeilen bleiben leer, nicht zuordenbare Einträge kommen ins Import-Protokoll.
 4. Aus `settings/config.json` übernehmen: Verantwortliche, Stand (`TT.MM.JJJJ` → ISO) und Uhr-Anzeige.
    - **Notfallkontakte** so übernehmen, wie v1 sie *tatsächlich angezeigt* hat. v1 hat den Wert als Zeilenindex in `personalData.csv` behandelt (Kopfzeile = 0), nicht als ID.
@@ -168,7 +168,7 @@ Beim ersten Request ohne Datenbank (unter Lock):
 
 - Tabelle zum Suchen und Sortieren. Personen anlegen, bearbeiten, löschen.
 - Beim Löschen erscheint ein Hinweis, in wie vielen Schichten und ob als Notfallkontakt die Person eingeteilt ist.
-- **CSV-Import** im bisherigen Format (`Id;Name;Vorname;Klasse;Telefonnummer;Nickname`) mit Vorschau: neu / geändert / unverändert.
+- **CSV-Import** im Format `Id;Name;Vorname;Klasse;Telefonnummer` (eine alte Nickname-Spalte wird ignoriert) mit Vorschau: neu / geändert / unverändert.
 - „Alle Personen löschen“ für den Schuljahreswechsel, mit doppelter Bestätigung.
 
 ### Einstellungen (`settings/`)

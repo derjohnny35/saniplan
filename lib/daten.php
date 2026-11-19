@@ -19,7 +19,7 @@ function schichten_laden(PDO $db)
 /** Alle Personen, nach Nachname/Vorname sortiert. */
 function personen_laden(PDO $db)
 {
-    $zeilen = $db->query('SELECT id, nachname, vorname, klasse, telefon, spitzname FROM person
+    $zeilen = $db->query('SELECT id, nachname, vorname, klasse, telefon FROM person
         ORDER BY nachname COLLATE NOCASE, vorname COLLATE NOCASE')->fetchAll();
     foreach ($zeilen as &$z) {
         $z['id'] = (int) $z['id'];
@@ -134,11 +134,11 @@ function einsaetze_je_person(PDO $db)
 
 /**
  * Prüft und normalisiert eine Person aus einer Eingabe.
- * @return array [nachname, vorname, klasse, telefon, spitzname]
+ * @return array [nachname, vorname, klasse, telefon]
  */
 function person_pruefen($eingabe)
 {
-    $felder = array('nachname', 'vorname', 'klasse', 'telefon', 'spitzname');
+    $felder = array('nachname', 'vorname', 'klasse', 'telefon');
     $p = array();
     foreach ($felder as $f) {
         $wert = isset($eingabe[$f]) ? trim((string) $eingabe[$f]) : '';
@@ -157,7 +157,7 @@ function person_pruefen($eingabe)
 }
 
 /**
- * Liest Personen aus CSV-Text im v1-Format (Id;Name;Vorname;Klasse;Telefonnummer;Nickname).
+ * Liest Personen aus CSV-Text im v1-Format (Id;Name;Vorname;Klasse;Telefonnummer). Weitere Spalten (z. B. der frühere Nickname) werden ignoriert.
  * Die erste Zeile wird als Kopfzeile übersprungen, wenn ihre erste Spalte keine Zahl ist.
  * @return array ['personen' => [...], 'fehler' => [...]]
  */
@@ -194,7 +194,6 @@ function personen_csv_parsen($text)
                 'vorname' => $felder[2],
                 'klasse' => $felder[3],
                 'telefon' => $felder[4],
-                'spitzname' => isset($felder[5]) ? $felder[5] : '',
             ));
         } catch (EingabeFehler $e) {
             $fehler[] = 'Zeile ' . ($nr + 1) . ': ' . $e->getMessage();

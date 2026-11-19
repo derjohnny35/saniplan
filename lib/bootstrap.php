@@ -6,7 +6,7 @@
 if (!defined('SANIPLAN')) {
     define('SANIPLAN', true);
 }
-define('SANIPLAN_VERSION', '2.0.1');
+define('SANIPLAN_VERSION', '2.0.2');
 define('SANIPLAN_ROOT', dirname(__DIR__));
 define('SANIPLAN_DATA', SANIPLAN_ROOT . '/data');
 define('SANIPLAN_DB', SANIPLAN_DATA . '/saniplan.sqlite');

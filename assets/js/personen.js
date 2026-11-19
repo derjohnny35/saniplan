@@ -1,7 +1,7 @@
 // Personenverwaltung
 import { html, render, useState, useEffect, useCallback, api, personName, Meldung, Dialog } from 'saniplan/gemeinsam';
 
-const LEER = { id: 0, nachname: '', vorname: '', klasse: '', telefon: '', spitzname: '' };
+const LEER = { id: 0, nachname: '', vorname: '', klasse: '', telefon: '' };
 
 function App() {
     const [personen, setPersonen] = useState(null);
@@ -58,7 +58,7 @@ function App() {
 
     const begriff = suche.trim().toLowerCase();
     const liste = (personen || []).filter((p) => !begriff
-        || `${p.id} ${p.vorname} ${p.nachname} ${p.klasse} ${p.telefon} ${p.spitzname}`.toLowerCase().includes(begriff));
+        || `${p.id} ${p.vorname} ${p.nachname} ${p.klasse} ${p.telefon}`.toLowerCase().includes(begriff));
 
     return html`
         <h1>Personen</h1>
@@ -73,7 +73,7 @@ function App() {
         ${!personen && !meldung && html`<p>Wird geladen …</p>`}
         ${personen && html`<table class="tabelle">
             <thead><tr>
-                <th class="zahl">ID</th><th>Nachname</th><th>Vorname</th><th>Klasse</th><th>Telefon</th><th>Spitzname</th>
+                <th class="zahl">ID</th><th>Nachname</th><th>Vorname</th><th>Klasse</th><th>Telefon</th>
                 <th class="zahl">Einteilungen</th><th></th>
             </tr></thead>
             <tbody>
@@ -83,14 +83,13 @@ function App() {
                     <td>${p.vorname}</td>
                     <td>${p.klasse}</td>
                     <td>${p.telefon}</td>
-                    <td>${p.spitzname}</td>
                     <td class="zahl">${p.einsaetze}${p.notfallkontakt ? html` <span class="badge" title="Notfallkontakt">Notfall</span>` : ''}</td>
                     <td style="white-space:nowrap;text-align:right">
                         <button class="klein" onClick=${() => setBearbeiten({ ...p })}>Bearbeiten</button>
                         <button class="klein gefahr" onClick=${() => loeschen(p)}>Löschen</button>
                     </td>
                 </tr>`)}
-                ${liste.length === 0 && html`<tr><td colspan="8">${personen.length === 0
+                ${liste.length === 0 && html`<tr><td colspan="7">${personen.length === 0
                     ? 'Noch keine Personen angelegt.' : 'Keine Person gefunden.'}</td></tr>`}
             </tbody>
         </table>
@@ -127,8 +126,6 @@ function PersonDialog({ person, schliessen, gespeichert }) {
                 ${feld('nachname', 'Nachname')}
                 ${feld('klasse', 'Klasse')}
                 ${feld('telefon', 'Telefonnummer', 'tel')}
-                ${feld('spitzname', 'Spitzname')}
-                <span class="hilfe">optional</span>
             </div>
             <div class="werkzeugleiste">
                 <button type="button" onClick=${schliessen}>Abbrechen</button>
@@ -184,7 +181,7 @@ function ImportDialog({ schliessen, fertig }) {
 
     return html`<${Dialog} titel="Personen aus CSV importieren" schliessen=${schliessen} breit>
         <p>Format wie bisher, Trennzeichen <code>;</code>, erste Zeile ist die Kopfzeile:<br />
-            <code>Id;Name;Vorname;Klasse;Telefonnummer;Nickname</code></p>
+            <code>Id;Name;Vorname;Klasse;Telefonnummer</code><br />Weitere Spalten (z. B. der frühere Nickname) werden ignoriert.</p>
         <p>Personen mit bereits vorhandener ID werden aktualisiert, alle anderen neu angelegt. Es wird niemand gelöscht.</p>
         <div class="werkzeugleiste" style="justify-content:flex-start;margin:0 0 8px">
             <input type="file" accept=".csv,text/csv,text/plain" onChange=${datei} />
@@ -195,12 +192,12 @@ function ImportDialog({ schliessen, fertig }) {
         ${vorschau && vorschau.fehler.length > 0 && html`<div class="meldung fehler"><span>
             <strong>Bitte korrigieren:</strong><br />${vorschau.fehler.map((f) => html`${f}<br />`)}</span></div>`}
         ${vorschau && html`<table class="tabelle" style="margin-top:12px">
-            <thead><tr><th class="zahl">ID</th><th>Name</th><th>Klasse</th><th>Telefon</th><th>Spitzname</th><th>Status</th></tr></thead>
+            <thead><tr><th class="zahl">ID</th><th>Name</th><th>Klasse</th><th>Telefon</th><th>Status</th></tr></thead>
             <tbody>${vorschau.personen.map((p) => html`<tr key=${p.id}>
                 <td class="zahl">${p.id}</td>
                 <td>${personName(p)}${p.status === 'geaendert' && personName(p.vorher) !== personName(p)
                     ? html`<br /><small>vorher: ${personName(p.vorher)}</small>` : ''}</td>
-                <td>${p.klasse}</td><td>${p.telefon}</td><td>${p.spitzname}</td>
+                <td>${p.klasse}</td><td>${p.telefon}</td>
                 <td><span class="badge ${p.status}">${statusText[p.status]}</span></td>
             </tr>`)}</tbody>
         </table>`}

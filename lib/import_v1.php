@@ -58,7 +58,7 @@ function import_v1_ausfuehren(PDO $db)
                 $maxId = (int) $felder[0];
             }
         }
-        $einfuegen = $db->prepare('INSERT INTO person (id, nachname, vorname, klasse, telefon, spitzname) VALUES (?, ?, ?, ?, ?, ?)');
+        $einfuegen = $db->prepare('INSERT INTO person (id, nachname, vorname, klasse, telefon) VALUES (?, ?, ?, ?, ?)');
         $anzahl = 0;
         foreach ($zeilen as $nr => $zeile) {
             if ($nr === 0 || trim($zeile) === '') {
@@ -87,9 +87,10 @@ function import_v1_ausfuehren(PDO $db)
                     . $vorname . ' ' . $nachname . ' hat jetzt die ID ' . $id . '.';
             }
             $vergebeneIds[$id] = true;
-            $einfuegen->execute(array($id, $nachname, $vorname, $klasse, $telefon, $spitzname));
+            $einfuegen->execute(array($id, $nachname, $vorname, $klasse, $telefon));
             $zeileZuId[$nr] = $id;
             // Für die Zuordnung zählt die ID aus der Datei (wie in v1), nicht eine neu vergebene.
+            // Der Spitzname wird nicht gespeichert, nur zum Zuordnen alter Planeinträge verwendet.
             $personen[] = array('id_text' => $idText, 'id' => $id, 'spitzname' => $spitzname, 'name' => $vorname . ' ' . $nachname);
             $anzahl++;
         }

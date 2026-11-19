@@ -4,7 +4,8 @@ if (!defined('SANIPLAN')) { http_response_code(403); exit; }
 /**
  * Geordnete Liste der Schema-Migrationen. Index = Schema-Version nach der Migration.
  * Neue Migrationen nur hinten anhängen, bestehende nie verändern.
- * Hinweis: Das SQLite auf älteren Pis kennt kein UPSERT und keine Window-Funktionen.
+ * Hinweis: Das SQLite auf älteren Pis kennt kein UPSERT, keine Window-Funktionen und kein DROP COLUMN.
+ * Deshalb bleibt die Spalte person.spitzname bestehen, wird aber seit 2.0.2 nicht mehr verwendet.
  */
 function saniplan_migrationen()
 {

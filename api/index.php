@@ -174,15 +174,15 @@ try {
             $id = isset($e['id']) ? (int) $e['id'] : 0;
             $neueId = schreiben($db, function () use ($db, $p, $id) {
                 if ($id > 0) {
-                    $st = $db->prepare('UPDATE person SET nachname = ?, vorname = ?, klasse = ?, telefon = ?, spitzname = ? WHERE id = ?');
-                    $st->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $p['spitzname'], $id));
+                    $st = $db->prepare('UPDATE person SET nachname = ?, vorname = ?, klasse = ?, telefon = ? WHERE id = ?');
+                    $st->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $id));
                     if ($st->rowCount() === 0) {
                         throw new EingabeFehler('Diese Person gibt es nicht mehr.');
                     }
                     return $id;
                 }
-                $st = $db->prepare('INSERT INTO person (nachname, vorname, klasse, telefon, spitzname) VALUES (?, ?, ?, ?, ?)');
-                $st->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $p['spitzname']));
+                $st = $db->prepare('INSERT INTO person (nachname, vorname, klasse, telefon) VALUES (?, ?, ?, ?)');
+                $st->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon']));
                 return (int) $db->lastInsertId();
             });
             antwort(array('ok' => true, 'id' => $neueId));
@@ -218,7 +218,7 @@ try {
             foreach (personen_laden($db) as $p) {
                 $vorhanden[$p['id']] = $p;
             }
-            $felder = array('nachname', 'vorname', 'klasse', 'telefon', 'spitzname');
+            $felder = array('nachname', 'vorname', 'klasse', 'telefon');
             $vorschau = array();
             foreach ($ergebnis['personen'] as $p) {
                 $status = 'neu';
@@ -239,13 +239,13 @@ try {
                     throw new EingabeFehler('Die Datei enthält Fehler. Bitte zuerst korrigieren.');
                 }
                 schreiben($db, function () use ($db, $vorschau) {
-                    $neu = $db->prepare('INSERT INTO person (id, nachname, vorname, klasse, telefon, spitzname) VALUES (?, ?, ?, ?, ?, ?)');
-                    $aendern = $db->prepare('UPDATE person SET nachname = ?, vorname = ?, klasse = ?, telefon = ?, spitzname = ? WHERE id = ?');
+                    $neu = $db->prepare('INSERT INTO person (id, nachname, vorname, klasse, telefon) VALUES (?, ?, ?, ?, ?)');
+                    $aendern = $db->prepare('UPDATE person SET nachname = ?, vorname = ?, klasse = ?, telefon = ? WHERE id = ?');
                     foreach ($vorschau as $p) {
                         if ($p['status'] === 'neu') {
-                            $neu->execute(array($p['id'], $p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $p['spitzname']));
+                            $neu->execute(array($p['id'], $p['nachname'], $p['vorname'], $p['klasse'], $p['telefon']));
                         } elseif ($p['status'] === 'geaendert') {
-                            $aendern->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $p['spitzname'], $p['id']));
+                            $aendern->execute(array($p['nachname'], $p['vorname'], $p['klasse'], $p['telefon'], $p['id']));
                         }
                     }
                 });

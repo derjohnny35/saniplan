@@ -92,9 +92,9 @@ Erreichbar über den Button oben rechts. Die wichtigsten Funktionen:
 Personen lassen sich einzeln pflegen oder zum Schuljahreswechsel per CSV importieren. Format (Trennzeichen `;`, erste Zeile ist die Kopfzeile):
 
 ```csv
-Id;Name;Vorname;Klasse;Telefonnummer;Nickname
-1;Mustermann;Max;10c;1234/567890;Maxi
-2;Arbeit;Andi;12c;1234/567889;
+Id;Name;Vorname;Klasse;Telefonnummer
+1;Mustermann;Max;10c;1234/567890
+2;Arbeit;Andi;12c;1234/567889
 ```
 
 ### Einstellungen

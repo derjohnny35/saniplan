@@ -304,7 +304,7 @@ function App() {
 
     const suchbegriff = suche.trim().toLowerCase();
     const liste = basis.personen.filter((p) => !suchbegriff
-        || `${p.vorname} ${p.nachname} ${p.klasse} ${p.spitzname}`.toLowerCase().includes(suchbegriff));
+        || `${p.vorname} ${p.nachname} ${p.klasse}`.toLowerCase().includes(suchbegriff));
 
     return html`
         <div class="editor-kopf">
