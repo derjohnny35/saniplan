@@ -40,6 +40,8 @@ Mehr ist nicht nötig. Änderungen an der Datenbank werden beim nächsten Seiten
 
 Ob alles läuft, zeigt die Diagnoseseite unter `…/saniplan/diagnose/`.
 
+Zum Prüfen der Anzeige zu einer anderen Uhrzeit gibt es einen Testmodus, z. B. `…/saniplan/?testzeit=2026-11-16T09:45` (Montag, 09:45 Uhr).
+
 ## Umstieg von Version 1
 
 Der Umstieg passiert automatisch beim ersten Aufruf nach dem `git pull`:

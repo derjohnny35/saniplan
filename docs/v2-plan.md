@@ -206,18 +206,33 @@ Beim ersten Request ohne Datenbank (unter Lock):
 
 Alle Schreibzugriffe validieren die Eingaben serverseitig und laufen in einer Transaktion. Fehler kommen als JSON `{fehler: "…"}` mit passendem HTTP-Status zurück.
 
-## Umsetzungsschritte (je ein Commit auf `v2`)
+## Umsetzungsschritte
 
 1. ✅ Branch, Plan, README
-2. Grundgerüst: `lib/bootstrap.php`, DB-Verbindung, Migrationen mit Lock, `.gitignore`, `.htaccess`, Diagnoseseite
-3. v1-Import inkl. Archivierung und Rücksetz-Fallback für `config.json`, mit Tests anhand verschiedener CSV-Varianten
-4. JSON-API
-5. Anzeige
-6. Editor + Druckansicht
-7. Personen + Einstellungen
-8. Alte v1-Dateien entfernen (`config.php`, `person.php`, `script.js`, `style.css`, `editor/script.js`, `editor/style.css`, `editor/print.*`)
-9. Test in Docker mit **`php:7.0-apache`** und einem aktuellen PHP 8, jeweils frische Installation und Umstieg von v1 mit Beispieldaten
+2. ✅ Grundgerüst: `lib/bootstrap.php`, DB-Verbindung, Migrationen mit Lock, `.gitignore`, `.htaccess`, Diagnoseseite
+3. ✅ v1-Import inkl. Archivierung und Rücksetz-Fallback für `config.json`
+4. ✅ JSON-API
+5. ✅ Anzeige (mit Testmodus `?testzeit=2026-11-16T09:45` zum Prüfen beliebiger Uhrzeiten)
+6. ✅ Editor + Druckansicht
+7. ✅ Personen + Einstellungen
+8. ✅ Alte v1-Code-Dateien entfernt
+9. ✅ Tests in Docker (siehe unten)
 10. Merge nach `main` → **Release 2.0** → auf dem Pi `git pull` → Diagnoseseite prüfen → **Release 2.0.1**
+
+### Durchgeführte Tests (19.11.2026)
+
+| Szenario | Umgebung | Ergebnis |
+|---|---|---|
+| Umstieg mit den v1-Beispieldaten aus dem Repo | `php:7.0-apache` | Import korrekt, alle Altdateien archiviert |
+| Pi-Simulation: v1-Klon mit lokal geänderten Daten (Windows-1252, CRLF, doppelte ID, Zeile mit 5 Feldern, Spitznamen, „Vorname Nachname“, unbekannter Eintrag, abweichende Pausenzeile, Notfallkontakte als Zeilenindex) → `git pull` auf v2 | `php:8.3-apache` | Pull ohne Konflikt, Import und Protokoll korrekt, Notfallkontakte wie in v1 angezeigt |
+| Danach simuliertes Release 2.0.1 (Altdateien per `git rm` entfernt) → `git pull` | – | Pull ohne Konflikt, Arbeitsverzeichnis sauber |
+| `settings/` für den Webserver nicht beschreibbar | `php:7.0-apache`, echte Linux-Rechte | `config.json` kopiert und byte-genau auf den Git-Stand zurückgesetzt |
+| Neuinstallation ohne v1-Daten | `php:7.0-apache` | Leere Datenbank, alle Seiten erreichbar |
+| API: Validierung, Konflikterkennung beim Speichern, Import mit Fehlern | `php:7.0-apache` | wie erwartet |
+| Editor: Klick-Zuweisung, Drag & Drop, Rückgängig, Speichern, Druckansicht | Chromium | wie erwartet |
+| Anzeige: Schicht, leere Schicht, Server während des Betriebs gestoppt | Chromium | Plan bleibt stehen, Hinweis „Keine Verbindung seit …“ |
+
+Nicht getestet: echter Raspberry Pi und der Browser im Sekretariat.
 
 ## Bewusst nicht enthalten
 
