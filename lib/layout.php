@@ -59,7 +59,7 @@ function seite_fuss($basis, $modul, $links = '')
         <div class="links"><?php echo $links; ?>Stand des Bereitschaftsplans:
             <span id="stand"><?php echo h(datum_deutsch($stand)); ?></span></div>
         <div>Saniplan Version <?php echo h(SANIPLAN_VERSION); ?> · <a href="<?php echo h($basis); ?>diagnose/">Diagnose</a></div>
-        <div class="rechts">©Jonathan Hostadt 2023</div>
+        <div class="rechts">©Jonathan Hostadt 2026</div>
         <script>console.log("Fakt: Der Informatik-LK 2022-24 war mit Abstand der coolste");</script>
     </footer>
     <?php if ($modul !== '') {

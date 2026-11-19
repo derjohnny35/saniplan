@@ -44,15 +44,30 @@ Zum Prüfen der Anzeige zu einer anderen Uhrzeit gibt es einen Testmodus, z. B. 
 
 ## Umstieg von Version 1
 
-Der Umstieg passiert automatisch beim ersten Aufruf nach dem `git pull`:
+Der Umstieg von einer laufenden Version 1 besteht aus **drei Schritten in genau dieser Reihenfolge**:
 
-1. Version 2 liest die vorhandenen Dateien ein. Das sind `data/personalData.csv`, `data/bereitschaftsplan.csv`, `data/bereitschaftsplanMusikschule.csv` und `settings/config.json`.
+```sh
+cd /var/www/html/saniplan
+git pull origin v2
+```
+
+Danach **im Browser die Diagnoseseite öffnen**: `http://<IP-des-Pi>/saniplan/diagnose/`. Beim Aufruf passiert Folgendes:
+
+1. Version 2 liest die vorhandenen Dateien ein: `data/personalData.csv`, `data/bereitschaftsplan.csv`, `data/bereitschaftsplanMusikschule.csv` und `settings/config.json`.
 2. Danach werden diese Dateien nach `data/archiv-v1/` verschoben und bleiben dort als Sicherung liegen.
-3. Auf der Diagnoseseite steht das Import-Protokoll. **Bitte einmal unter *Einstellungen* prüfen, ob die richtigen Notfallkontakte eingetragen sind.**
+3. Die Diagnoseseite muss bei „Altdateien aus Version 1“ einen grünen Haken zeigen: „bereit für Release 2.0.1“.
+
+Erst dann:
+
+```sh
+git pull origin main
+```
+
+Zum Schluss bitte einmal unter *Einstellungen* prüfen, ob die richtigen Notfallkontakte eingetragen sind. Das Import-Protokoll steht auf der Diagnoseseite.
 
 Die Pläne für die ungerade Woche (A/B-Woche) gibt es in Version 2 nicht mehr. Sie werden nicht übernommen.
 
-> **Hinweis für Entwickler:** Das Release, das die alten CSV-Dateien aus dem Repository entfernt (2.0.1), erst veröffentlichen, wenn die Diagnoseseite auf dem Pi „Import abgeschlossen, Altdateien archiviert“ meldet. Sonst bricht `git pull` dort ab. Die Gründe stehen in [docs/v2-plan.md](docs/v2-plan.md#umstieg-von-v1-zwei-releases).
+**Falls der letzte `git pull` mit „Your local changes … would be overwritten“ abbricht:** Es ist nichts kaputt. Die Diagnoseseite wurde vermutlich noch nicht aufgerufen. Erst `git pull origin v2` ausführen (falls noch nicht geschehen), dann die Diagnoseseite öffnen und `git pull origin main` wiederholen.
 
 ## Bedienung
 
